@@ -8,7 +8,7 @@ HPU_PATH="/var/www/$HPU_DOMAIN"
 HPU_OK_MESSAGE="\e[1;32mok\e[0m"
 HPU_ERROR_MESSAGE="\e[1;31merror\e[0m"
 
-echo -e "\e[1m\e[1;36mnube.pragmore.com\e[0m\e[0m 🚀\n"
+echo -e "\e[1m\e[1;36mnube.pragmore.com\e[0m\e[0m 🚀"
 
 git --work-tree=$HPU_PATH --git-dir=$HPU_GIT_DIR checkout -f -q $HPU_GIT_BRANCH 
 
