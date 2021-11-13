@@ -8,7 +8,8 @@ HPU_PATH="/var/www/$HPU_DOMAIN"
 HPU_OK_MESSAGE="\e[1;32mok\e[0m"
 HPU_ERROR_MESSAGE="\e[1;31merror\e[0m"
 
-echo -e "\e[1;36mdeploymy.site\e[0m 🚀"
+echo -e "⬆⬆⬆ ☁<fe0f>  → 🔗 \e[2mhttps://\e[1m\e[1;36mnube\e[0m\e[2m.\e[1;33mpragmore.com\e[0m\e[0m 🚀\n"
+
 git --work-tree=$HPU_PATH --git-dir=$HPU_GIT_DIR checkout -f -q $HPU_GIT_BRANCH 
 
 cd $HPU_PATH
@@ -33,4 +34,4 @@ if [ -f artisan ]; then
 
 fi
 
-echo -e "\e[1;32mDone!\e[0m check 🔗 \e[34;4mhttps://$HPU_DOMAIN/\e[0m"
+echo -e "\e[1;32mDone!\e[0m ✅ → 🔗 \e[34;4mhttps://$HPU_DOMAIN/\e[0m"
