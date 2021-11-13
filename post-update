@@ -1,0 +1,7 @@
+#!/bin/sh
+# REPLACE_NAME deploy
+echo -e "\e[1;32mDeploying to prod\e[0m"
+git --work-tree=/var/www/REPLACE_DOMAIN --git-dir=/repository/REPLACE_NAME.git checkout -f main 2> /dev/null
+cd /var/www/REPLACE_DOMAIN
+[[ -e composer.json ]] && composer install -n -q
+[[ -e .env.example ]] && cp -n .env.example .env
