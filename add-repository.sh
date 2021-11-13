@@ -16,6 +16,6 @@ else
 fi
 
 
-chmod a+x $POST_UPDATE_FILE
 echo "#!/bin/sh" > $POST_UPDATE_FILE
 echo "hook-post-update \"$DOMAIN\" `pwd`" > $POST_UPDATE_FILE
+chmod a+x $POST_UPDATE_FILE
