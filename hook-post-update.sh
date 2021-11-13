@@ -24,7 +24,7 @@ cd $HPU_PATH
 # Laravel
 if [ -f artisan ]; then 
 
-    echo -e "\eFramework found... [1mLaravel\e[0m"
+    echo -e "Framework found... \e[1mLaravel\e[0m"
 
     echo -e -n "Cache config... " && php artisan config:cache -q && echo -e $HPU_OK_MESSAGE  || echo -e $HPU_ERROR_MESSAGE
     echo -e -n "Cache routes... " && php artisan route:cache -q && echo -e $HPU_OK_MESSAGE  || echo -e $HPU_ERROR_MESSAGE
