@@ -1,1 +1,1 @@
-# deploymy.site Server Scripts
+# nube.pragmore.com server scripts
