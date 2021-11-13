@@ -1,7 +1,7 @@
 #!/bin/sh
 
 HPU_DOMAIN=$1
-HPU_GIT_DIR=$2
+HPU_GIT_DIR="$2/../"
 HPU_GIT_BRANCH=main
 
 echo -e "\e[1;36mdeploymy.site\e[0m 🚀 \e[34;4mhttps://$HPU_DOMAIN/\e[0m"
