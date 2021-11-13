@@ -1,3 +1,0 @@
-#!/bin/sh
-# REPLACE_NAME deploy
-hook-post-update REPLACE_DOMAIN `pwd`
