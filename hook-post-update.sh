@@ -11,6 +11,8 @@ HPU_ERROR_MESSAGE="\e[1;31merror\e[0m"
 echo -e "\e[1;36mdeploymy.site\e[0m 🚀"
 git --work-tree=$HPU_PATH --git-dir=$HPU_GIT_DIR checkout -f -q $HPU_GIT_BRANCH 
 
+cd $HPU_PATH
+
 [ ! -f .env ] && [ -f .env.example ] && echo -e "Copy default config..." && cp .env.example .env && echo -e $HPU_OK_MESSAGE
 
 [[ -e composer.json ]] && echo -e -n "Running composer... " && composer install -n -q && echo -e $HPU_OK_MESSAGE 
