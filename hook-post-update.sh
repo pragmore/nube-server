@@ -22,15 +22,14 @@ cd $HPU_PATH
     && (composer install --optimize-autoloader --no-dev -n -q && echo -e $HPU_OK_MESSAGE  || echo -e $HPU_ERROR_MESSAGE)
 
 # Laravel
-
 if [ -f artisan ]; then 
 
     echo -e "\eFramework found... [1mLaravel\e[0m"
 
-    echo -e -n "Cache config... " && php artisan config:cache && echo -e $HPU_OK_MESSAGE  || echo -e $HPU_ERROR_MESSAGE
-    echo -e -n "Cache routes... " && php artisan route:cache && echo -e $HPU_OK_MESSAGE  || echo -e $HPU_ERROR_MESSAGE
-    echo -e -n "Cache views... " && php artisan view:cache && echo -e $HPU_OK_MESSAGE  || echo -e $HPU_ERROR_MESSAGE
-    echo -e -n "Running migrations... " && php artisan migrate --force && echo -e $HPU_OK_MESSAGE  || echo -e $HPU_ERROR_MESSAGE
+    echo -e -n "Cache config... " && php artisan config:cache -q && echo -e $HPU_OK_MESSAGE  || echo -e $HPU_ERROR_MESSAGE
+    echo -e -n "Cache routes... " && php artisan route:cache -q && echo -e $HPU_OK_MESSAGE  || echo -e $HPU_ERROR_MESSAGE
+    echo -e -n "Cache views... " && php artisan view:cache -q && echo -e $HPU_OK_MESSAGE  || echo -e $HPU_ERROR_MESSAGE
+    echo -e -n "Running migrations... " && php artisan migrate --force
 
 fi
 
