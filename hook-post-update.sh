@@ -13,7 +13,7 @@ git --work-tree=$HPU_PATH --git-dir=$HPU_GIT_DIR checkout -f -q $HPU_GIT_BRANCH
 
 cd $HPU_PATH
 
-[ ! -f .env ] && [ -f .env.example ] && echo -e "Copy default config..." && cp .env.example .env && echo -e $HPU_OK_MESSAGE
+[ ! -f .env ] && [ -f .env.example ] && echo -e -n "Copy default config..." && cp .env.example .env && echo -e $HPU_OK_MESSAGE
 
 [[ -e composer.json ]] && echo -e -n "Running composer... " && composer install -n -q && echo -e $HPU_OK_MESSAGE 
 
