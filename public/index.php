@@ -1,7 +1,7 @@
 <?php
 
 define('APPLY_BETA', 'Quiero participar de la beta');
-define('DESCRIPTION', 'Nube es un servicio de cloud (PaaS) para PHP simple, rápido y accesible. Se integra automáticamente con los frameworks mas populares como Laravel y Symfony.');
+define('DESCRIPTION', 'Subi tu PHP de la manera mas fácil y rápida. Soporta Laravel, Symfony, entre otros.');
 
 ?><!doctype html>
 <html lang="en">
