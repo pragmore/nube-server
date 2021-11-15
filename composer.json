@@ -1,5 +1,8 @@
 {
     "require": {
         "symfony/http-foundation": "^5.3"
+    },
+    "extra": {
+        "phps": "-t public"
     }
 }
