@@ -61,7 +61,7 @@ if [ -f artisan ]; then
 
     # Patch max key bug
     grep Schema::defaultStringLength app/Providers/AppServiceProvider.php || sed -i '/boot()/{N;N;
-        a \ \ \ \ \ \ \ \ \\Illuminate\\Support\\Facades\\Schema\\Schema::defaultStringLength(191); /* Max key error https://github.com/laravel/framework/issues/24711 */
+        a \ \ \ \ \ \ \ \ \\Illuminate\\Support\\Facades\\Schema::defaultStringLength(191); /* Max key error https://github.com/laravel/framework/issues/24711 */
     }' app/Providers/AppServiceProvider.php 
 
     echo -e -n $HPU_CACHE_CONFIG_MESSAGE && php artisan config:cache -q && echo -e $HPU_OK_MESSAGE  || echo -e $HPU_ERROR_MESSAGE
