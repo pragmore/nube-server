@@ -19,24 +19,24 @@ define('DESCRIPTION', 'Subi tu PHP de la manera mas fácil y rápida. Soporta La
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap');
 body { font-family: 'Quicksand', sans-serif }
-h1 i{ font-size: .8em }
+h1 span{ font-size: .8em }
 @media (max-width:420px) { h1 { margin: 1em }}
 </style>
 </head>
 <body>
   <main class="text-center">
-    <h1><em>Nube</em>, by Pragmore <i aria-hidden="true">🚀</i></h1>
+    <h1><em>Nube</em>, by Pragmore <span aria-hidden="true">🚀</span></h1>
     <p class="text-lg">
         Poné tus apps <em>PHP</em> online en segundos desde <strong>git</strong>. Un Heroku nacional y popular, a precios cuidados. <strong>Sumate a la beta gratis</strong>.
     </p>
     <p class="text-lg">
-        <a href="mailto:nube@pragmore.com?subject=<?= APPLY_BETA ?>" class="btn main"><?= APPLY_BETA ?> <i aria-hidden="true">✨</i></a>
+        <a href="mailto:nube@pragmore.com?subject=<?= APPLY_BETA ?>" class="btn main"><?= APPLY_BETA ?> <span aria-hidden="true">✨</span></a>
     </p>
     <script id="asciicast-RiPZdEvLYAlcDuxUqpxCqDisa" src="https://asciinema.org/a/RiPZdEvLYAlcDuxUqpxCqDisa.js" async></script>
     <p>Lo podes usar con PhpStorm, Visual Studio Code, Sublime o cualquier otro programa que soporte <strong>git</strong>. Mira también como se integra con <a href="https://asciinema.org/a/I8YTFPTFVh4Z1YeaZqWQYEdyK" target="_blank">Laravel y corre las migraciones automáticamente</a>.</p>
 
     <h2>Mandanos un mensaje</h2>
-    <h4><i aria-hidden="true">📩</i> <a href="mailto:nube@pragmore.com">nube@pragmore.com</h4>
+    <h4><span aria-hidden="true">📩</span> <a href="mailto:nube@pragmore.com">nube@pragmore.com</h4>
     <h4>
       <a href="https://wa.me/541156234435" target="_blank" aria-label="Contactanos por WhatsApp">
         <i class="wa" aria-hidden="true" title="Contactanos por WhatsApp"></i> +54 11 5623-4435
