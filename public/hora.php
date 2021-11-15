@@ -1,3 +1,7 @@
 <?php
+
+require __DIR__ . '/../vendor/autoload.php';
+
 $hora = date('g:i:s');
-echo "Son las $hora hs\n";
+
+(new \Symfony\Component\HttpFoundation\JsonResponse(['hora'=>$hora]))->send();
