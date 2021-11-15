@@ -42,9 +42,8 @@ h1 span{ font-size: .8em }
     <p class="text-lg">
         <a href="mailto:<?= EMAIL ?>?subject=<?= APPLY_BETA ?>" class="btn main"><?= APPLY_BETA ?> <span aria-hidden="true">✨</span></a>
     </p>
-    <script id="asciicast-RiPZdEvLYAlcDuxUqpxCqDisa" src="https://asciinema.org/a/RiPZdEvLYAlcDuxUqpxCqDisa.js" async></script>
-    <p>Lo podes usar con PhpStorm, Visual Studio Code, Sublime o cualquier otro programa que soporte <strong>git</strong>. Mira también como se integra con <a href="https://asciinema.org/a/I8YTFPTFVh4Z1YeaZqWQYEdyK" target="_blank">Laravel y corre las migraciones automáticamente</a>.</p>
-
+    <div style="padding:75% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/646115215?h=0d030f11d1&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;" title="Nube, el PaaS de PHP"></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>
+    <p><a href="https://vimeo.com/646093322" target="_blank">Mira el video completo (dura 1:19)</a></p>
     <h2 class="mt-4">Mandanos un mensaje</h2>
     <h4><span aria-hidden="true">📩</span> <a href="mailto:<?= EMAIL ?>"><?= EMAIL ?></a></h4>
     <h4>
