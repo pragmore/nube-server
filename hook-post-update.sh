@@ -19,6 +19,7 @@ HPU_MIGRATIONS_MESSAGES="Corriendo migraciones..."
 HPU_CACHE_CONFIG_MESSAGE="Cacheando configuracion..."
 HPU_CACHE_ROUTES_MESSAGE="Cacheando rutas..."
 HPU_CACHE_VIEWS_MESSAGE="Cacheando vistas..."
+HPU_GENERATE_KEYS_MESSAGE="Generando claves..."
 HPU_DONE_MESSAGE="Listo"
 
 HPU_DB_CONN="mysql"
@@ -58,6 +59,8 @@ if [ -f artisan ]; then
     sed -i "s/DB_PORT=.*/DB_PORT=$HPU_DB_PORT/g" .env
     sed -i "s/DB_USERNAME=.*/DB_USERNAME=$HPU_DB_USER/g" .env
     sed -i "s/DB_PASSWORD=.*/DB_PASSWORD=$HPU_DB_PASS/g" .env
+
+    grep APP_KEY=base .env || echo -e -n $HPU_GENERATE_KEYS_MESSAGE && php artisan key:generate
 
     # Patch max key bug
     grep Schema::defaultStringLength app/Providers/AppServiceProvider.php || sed -i '/boot()/{N;N;
