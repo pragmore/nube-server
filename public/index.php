@@ -1,7 +1,7 @@
 <?php
 
 define('APPLY_BETA', 'Quiero participar de la beta');
-define('DESCRIPTION', 'Nube es un servicio de cloud para PHP, se destaca por su simplicidad y precio. Se integra automáticamente con los frameworks mas populares como Laravel y Symfony.');
+define('DESCRIPTION', 'Nube es un servicio de cloud (PaaS) para PHP simple, rápido y accesible. Se integra automáticamente con los frameworks mas populares como Laravel y Symfony.');
 
 ?><!doctype html>
 <html lang="en">
@@ -9,7 +9,7 @@ define('DESCRIPTION', 'Nube es un servicio de cloud para PHP, se destaca por su 
   <title>Nube, by Pragmore</title>
   <meta charset="utf-8">
   <meta name="description" content="<?= DESCRIPTION ?>">
-  <meta property="og:title" content="Nube, servicio de cloud de PHP" />
+  <meta property="og:title" content="Nube, servicio de cloud de PHP (PaaS) 🚀" />
   <meta property="og:description" content="<?= DESCRIPTION ?>" />
   <meta property="og:image" itemprop="image" content="https://nube.pragmore.com/push-prod.png">
   <meta property="og:type" content="website" />
