@@ -1,1 +1,5 @@
-<?php echo "servicios de cloud de php";
+<html>
+<body>
+<?php echo "Servicios de cloud de PHP"; ?>
+</body>
+</html>
