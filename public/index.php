@@ -35,7 +35,7 @@ h1 span{ font-size: .8em }
     <script id="asciicast-RiPZdEvLYAlcDuxUqpxCqDisa" src="https://asciinema.org/a/RiPZdEvLYAlcDuxUqpxCqDisa.js" async></script>
     <p>Lo podes usar con PhpStorm, Visual Studio Code, Sublime o cualquier otro programa que soporte <strong>git</strong>. Mira también como se integra con <a href="https://asciinema.org/a/I8YTFPTFVh4Z1YeaZqWQYEdyK" target="_blank">Laravel y corre las migraciones automáticamente</a>.</p>
 
-    <h2>Mandanos un mensaje</h2>
+    <h2 class="mt-4">Mandanos un mensaje</h2>
     <h4><span aria-hidden="true">📩</span> <a href="mailto:nube@pragmore.com">nube@pragmore.com</h4>
     <h4>
       <a href="https://wa.me/541156234435" target="_blank" aria-label="Contactanos por WhatsApp">
