@@ -3,8 +3,10 @@
 HPU_DOMAIN="$1"
 HPU_GIT_DIR="$2"
 HPU_GIT_BRANCH=main
+
 HPU_PATH="/var/www/$HPU_DOMAIN"
 HPU_SLUG=$(echo $HPU_DOMAIN | sed 's/\./_/g')
+HPU_URL="https://$HPU_DOMAIN"
 
 HPU_OK_MESSAGE="\e[32;1m ok\e[0m"
 HPU_ERROR_MESSAGE="\e[31;1m error\e[0m"
@@ -44,6 +46,9 @@ if [ -f artisan ]; then
 
     echo -e "$HPU_FRAMEWORK_MESSAGE \e[1mLaravel\e[0m"
     
+    # Update .env
+    sed -i "s/APP_URL=.*/APP_URL=$HPU_URL/g" .env
+
     sed -i "s/DB_CONNECTION=.*/DB_CONNECTION=$HPU_DB_CONN/g" .env
     sed -i "s/DB_HOST=.*/DB_HOST=$HPU_DB_HOST/g" .env
     sed -i "s/DB_DATABASE=.*/DB_DATABASE=$HPU_SLUG/g" .env
@@ -58,4 +63,4 @@ if [ -f artisan ]; then
 
 fi
 
-echo -e "\e[1;32m$HPU_DONE_MESSAGE\e[0m → 🔗 \e[34;4mhttps://$HPU_DOMAIN/\e[0m"
+echo -e "\e[1;32m$HPU_DONE_MESSAGE\e[0m → 🔗 \e[34;4m$HPU_URL\e[0m"
