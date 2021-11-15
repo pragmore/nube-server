@@ -20,7 +20,7 @@ HPU_CACHE_VIEWS_MESSAGE="Cacheando vistas..."
 HPU_DONE_MESSAGE="Listo"
 
 HPU_DB_CONN="mysql"
-HPU_DB_HOST="localhost"
+HPU_DB_HOST="127.0.0.1"
 HPU_DB_PORT="3306"
 HPU_DB_USER="root"
 HPU_DB_PASS="wGXFT4x3hyeAQtC"
