@@ -60,7 +60,7 @@ if [ -f artisan ]; then
     sed -i "s/DB_USERNAME=.*/DB_USERNAME=$HPU_DB_USER/g" .env
     sed -i "s/DB_PASSWORD=.*/DB_PASSWORD=$HPU_DB_PASS/g" .env
 
-    grep APP_KEY=base .env || echo -e -n $HPU_GENERATE_KEYS_MESSAGE && php artisan key:generate
+    [ ! $(grep APP_KEY=base .env) ] && echo -e -n $HPU_GENERATE_KEYS_MESSAGE && php artisan key:generate
 
     # Patch max key bug
     grep Schema::defaultStringLength app/Providers/AppServiceProvider.php || sed -i '/boot()/{N;N;
