@@ -1,10 +1,12 @@
 <?php
 
-define('TITLE', '<em>Nube</em>, by Pragmore');
 define('EMAIL', 'nube@pragmore.com');
 define('WHATSAPP_NUMBER', '+54 11 5623-4435');
 define('APPLY_BETA', 'Quiero participar de la beta');
+
+define('TITLE', 'Nube, servicio de cloud de PHP (PaaS)');
 define('DESCRIPTION', 'Subi tu PHP de la manera mas fácil y rápida. Soporta Laravel, Symfony, entre otros.');
+
 
 function onlyNumbers(string $text): string
 {
@@ -14,10 +16,10 @@ function onlyNumbers(string $text): string
 ?><!doctype html>
 <html lang="en">
 <head>
-  <title><?= strip_tags(TITLE) ?></title>
+  <title><?= TITLE ?></title>
   <meta charset="utf-8">
   <meta name="description" content="<?= DESCRIPTION ?>">
-  <meta property="og:title" content="Nube, servicio de cloud de PHP (PaaS) 🚀" />
+  <meta property="og:title" content="<?= TITLE ?> 🚀" />
   <meta property="og:description" content="<?= DESCRIPTION ?>" />
   <meta property="og:image" itemprop="image" content="https://nube.pragmore.com/push-prod.png">
   <meta property="og:type" content="website" />
@@ -33,7 +35,7 @@ h1 span{ font-size: .8em }
 </head>
 <body>
   <main class="text-center">
-    <h1><?= TITLE ?> <span aria-hidden="true">🚀</span></h1>
+    <h1><em>Nube</em>, by Pragmore <span aria-hidden="true">🚀</span></h1>
     <p class="text-lg">
         Poné tus apps <em>PHP</em> online en segundos desde <strong>git</strong>. Un Heroku nacional y popular, a precios cuidados. <strong>Sumate a la beta gratis</strong>.
     </p>
