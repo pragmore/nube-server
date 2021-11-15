@@ -1,8 +1,14 @@
 <?php
 
 define('EMAIL', 'nube@pragmore.com');
+define('WHATSAPP_NUMBER', '+54 11 5623-4435');
 define('APPLY_BETA', 'Quiero participar de la beta');
 define('DESCRIPTION', 'Subi tu PHP de la manera mas fácil y rápida. Soporta Laravel, Symfony, entre otros.');
+
+function onlyNumbers(string $text): string
+{
+    return preg_replace('/[^0-9.]+/', '', $text); 
+}
 
 ?><!doctype html>
 <html lang="en">
@@ -37,10 +43,11 @@ h1 span{ font-size: .8em }
     <p>Lo podes usar con PhpStorm, Visual Studio Code, Sublime o cualquier otro programa que soporte <strong>git</strong>. Mira también como se integra con <a href="https://asciinema.org/a/I8YTFPTFVh4Z1YeaZqWQYEdyK" target="_blank">Laravel y corre las migraciones automáticamente</a>.</p>
 
     <h2 class="mt-4">Mandanos un mensaje</h2>
-    <h4><span aria-hidden="true">📩</span> <a href="mailto:<?= EMAIL ?>"><?= EMAIL ?></h4>
+    <h4><span aria-hidden="true">📩</span> <a href="mailto:<?= EMAIL ?>"><?= EMAIL ?></a></h4>
     <h4>
-      <a href="https://wa.me/541156234435" target="_blank" aria-label="Contactanos por WhatsApp">
-        <i class="wa" aria-hidden="true" title="Contactanos por WhatsApp"></i> +54 11 5623-4435
+      <a href="https://wa.me/<?= onlyNumbers(WHATSAPP_NUMBER ) ?>" target="_blank" aria-label="Contactanos por WhatsApp">
+        <i class="wa" aria-hidden="true" title="Contactanos por WhatsApp"></i>
+        <?= WHATSAPP_NUMBER ?>
       </a>
     </h4>
   </main>
@@ -48,7 +55,7 @@ h1 span{ font-size: .8em }
     <span>Hecho con ❤️ y 🥚🥚🥚
         por <a href="https://pragmore.com">Pragmore</a></span>
     <span>
-      <a href="https://wa.me/541156234435" target="_blank" aria-label="Contactanos por WhatsApp">
+      <a href="https://wa.me/<?= onlyNumbers(WHATSAPP_NUMBER ) ?>" target="_blank" aria-label="Contactanos por WhatsApp">
         <i class="wa" aria-hidden="true" title="Contactanos por WhatsApp"></i>
       </a>
     </span>
@@ -65,7 +72,7 @@ h1 span{ font-size: .8em }
   </footer>
 <script>
 if ("maxTouchPoints" in navigator && navigator.maxTouchPoints > 0) {
-    document.querySelector('.btn.main').href = document.querySelector("[aria-label~=WhatsApp]").href + "?text=<?= APPLY_BETA ?>";
+    document.querySelector('.btn.main').href = "https://wa.me/<?= onlyNumbers(WHATSAPP_NUMBER) ?>?text=<?= APPLY_BETA ?>";
 }
 </script>
 </body>
