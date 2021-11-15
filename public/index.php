@@ -1,5 +1,6 @@
 <?php
 
+define('EMAIL', 'nube@pragmore.com');
 define('APPLY_BETA', 'Quiero participar de la beta');
 define('DESCRIPTION', 'Subi tu PHP de la manera mas fácil y rápida. Soporta Laravel, Symfony, entre otros.');
 
@@ -30,13 +31,13 @@ h1 span{ font-size: .8em }
         Poné tus apps <em>PHP</em> online en segundos desde <strong>git</strong>. Un Heroku nacional y popular, a precios cuidados. <strong>Sumate a la beta gratis</strong>.
     </p>
     <p class="text-lg">
-        <a href="mailto:nube@pragmore.com?subject=<?= APPLY_BETA ?>" class="btn main"><?= APPLY_BETA ?> <span aria-hidden="true">✨</span></a>
+        <a href="mailto:<?= EMAIL ?>?subject=<?= APPLY_BETA ?>" class="btn main"><?= APPLY_BETA ?> <span aria-hidden="true">✨</span></a>
     </p>
     <script id="asciicast-RiPZdEvLYAlcDuxUqpxCqDisa" src="https://asciinema.org/a/RiPZdEvLYAlcDuxUqpxCqDisa.js" async></script>
     <p>Lo podes usar con PhpStorm, Visual Studio Code, Sublime o cualquier otro programa que soporte <strong>git</strong>. Mira también como se integra con <a href="https://asciinema.org/a/I8YTFPTFVh4Z1YeaZqWQYEdyK" target="_blank">Laravel y corre las migraciones automáticamente</a>.</p>
 
     <h2 class="mt-4">Mandanos un mensaje</h2>
-    <h4><span aria-hidden="true">📩</span> <a href="mailto:nube@pragmore.com">nube@pragmore.com</h4>
+    <h4><span aria-hidden="true">📩</span> <a href="mailto:<?= EMAIL ?>"><?= EMAIL ?></h4>
     <h4>
       <a href="https://wa.me/541156234435" target="_blank" aria-label="Contactanos por WhatsApp">
         <i class="wa" aria-hidden="true" title="Contactanos por WhatsApp"></i> +54 11 5623-4435
