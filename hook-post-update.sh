@@ -47,7 +47,7 @@ if [ -f artisan ]; then
     echo -e "$HPU_FRAMEWORK_MESSAGE \e[1mLaravel\e[0m"
     
     # Update .env
-    sed -i "s/APP_URL=.*/APP_URL=$HPU_URL/g" .env
+    sed -i "s#APP_URL=.*#APP_URL=$HPU_URL#g" .env
 
     sed -i "s/DB_CONNECTION=.*/DB_CONNECTION=$HPU_DB_CONN/g" .env
     sed -i "s/DB_HOST=.*/DB_HOST=$HPU_DB_HOST/g" .env
