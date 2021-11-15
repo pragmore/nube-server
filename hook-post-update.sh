@@ -59,6 +59,11 @@ if [ -f artisan ]; then
     sed -i "s/DB_USERNAME=.*/DB_USERNAME=$HPU_DB_USER/g" .env
     sed -i "s/DB_PASSWORD=.*/DB_PASSWORD=$HPU_DB_PASS/g" .env
 
+    # Patch max key bug
+    grep Schema::defaultStringLength app/Providers/AppServiceProvider.php || sed -i '/boot()/{N;N;
+        a \ \ \ \ \ \ \ \ Schema::defaultStringLength(191); /* Max key error https://github.com/laravel/framework/issues/24711 */
+    }' app/Providers/AppServiceProvider.php 
+
     echo -e -n $HPU_CACHE_CONFIG_MESSAGE && php artisan config:cache -q && echo -e $HPU_OK_MESSAGE  || echo -e $HPU_ERROR_MESSAGE
     echo -e -n $HPU_CACHE_ROUTES_MESSAGE && php artisan route:cache -q && echo -e $HPU_OK_MESSAGE  || echo -e $HPU_ERROR_MESSAGE
     echo -e -n $HPU_CACHE_VIEWS_MESSAGE && php artisan view:cache -q && echo -e $HPU_OK_MESSAGE  || echo -e $HPU_ERROR_MESSAGE
