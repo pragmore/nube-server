@@ -31,6 +31,9 @@ echo -e "\e[36;1mnube.pragmore.com\e[0m 🚀 $HPU_UPLOAD_MESSAGE"
 
 git --work-tree=$HPU_PATH --git-dir=$HPU_GIT_DIR checkout -f -q $HPU_GIT_BRANCH 
 
+echo "CREATE DATABASE $HBU_SLUG IF NOT EXISTS" | \
+    mysql -u$HPU_DB_USER -p$HPU_DB_PASS --host=$HPU_DB_HOST --port=$HPU_DB_PORT
+
 cd $HPU_PATH
 
 # Common .env configs
