@@ -1,15 +1,11 @@
 #!/bin/bash
 DOMAIN=$1
 REPLACE_DOMAIN="REPLACE_DOMAIN"
-echo "disabling domain redirect"
-sudo sed -i "s/$REPLACE_DOMAIN/$DOMAIN/g" /etc/nginx/conf.d/add-domain.conf
-sudo systemctl reload nginx.service
+WEB_PATH="$HOME/www/$DOMAIN"
+PUBLIC_PATH="$WEB_PATH/public"
 echo "creating folder"
-mkdir -p /var/www/$DOMAIN/public
+mkdir -p $PUBLIC_PATH
+ln -s $WEB_PATH "/var/www/$DOMAIN"
 echo "creating home page"
-echo "<html><body><?= \"$DOMAIN \" ?></body></html>" > /var/www/$DOMAIN/public/index.php
-/home/ec2-user/.acme.sh/acme.sh --issue -d $DOMAIN -w /var/www/$DOMAIN/public/
-echo "reenabling domaing redirect"
-sudo sed -i "s/$DOMAIN/$REPLACE_DOMAIN/g" /etc/nginx/conf.d/add-domain.conf
-sudo systemctl reload nginx.service
-
+echo "<html><body><?= \"$DOMAIN \" ?></body></html>" > "$PUBLIC_PATH/index.php"
+/home/ec2-user/.acme.sh/acme.sh --issue -d $DOMAIN -w "$PUBLIC_PATH --stateless"
