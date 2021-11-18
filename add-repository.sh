@@ -1,4 +1,7 @@
 #!/bin/bash
+#
+# Create new repository
+
 NAME=$1
 DOMAIN=$2
 

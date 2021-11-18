@@ -1,4 +1,7 @@
 #!/bin/bash
+#
+# Set up a new domain app
+
 DOMAIN=$1
 WEB_PATH="$HOME/www/$DOMAIN"
 PUBLIC_PATH="$WEB_PATH/public"

@@ -1,113 +1,125 @@
 #!/bin/bash
+#
+# Deploy app 
 
-HPU_DOMAIN="$1"
-HPU_GIT_DIR="$2"
-HPU_GIT_BRANCH=main
+readonly NUBE_DOMAIN="$1"
+readonly NUBE_GIT_DIR="$2"
+readonly NUBE_GIT_BRANCH=main
 
-HPU_PATH="/var/www/$HPU_DOMAIN"
-HPU_SLUG=$(echo $HPU_DOMAIN | sed 's/[-\.]/_/g')
-HPU_URL="https://$HPU_DOMAIN"
+readonly NUBE_PATH="/var/www/$NUBE_DOMAIN"
+readonly NUBE_SLUG=$(echo $NUBE_DOMAIN | sed 's/[-\.]/_/g')
+readonly NUBE_URL="https://$NUBE_DOMAIN"
 
-HPU_OK_MESSAGE="\e[32;1m ok\e[0m"
-HPU_ERROR_MESSAGE="\e[31;1m error\e[0m"
+readonly NUBE_OK_MESSAGE="\e[32;1m ok\e[0m"
+readonly NUBE_ERROR_MESSAGE="\e[31;1m error\e[0m"
 
-HPU_UPLOAD_MESSAGE="Subir a \e[34m$HPU_DOMAIN\e[0m"
-HPU_COPY_CONFIG_MESSAGE="Copiar configuracion inicial..."
-HPU_RUNNING_COMPOSER_MESSAGE="Instalando composer..." 
-HPU_FRAMEWORK_MESSAGE="Framework encontrado:" 
-HPU_MIGRATIONS_MESSAGES="Corriendo migraciones..." 
-HPU_CACHE_CONFIG_MESSAGE="Cacheando configuracion..."
-HPU_CACHE_ROUTES_MESSAGE="Cacheando rutas..."
-HPU_CACHE_VIEWS_MESSAGE="Cacheando vistas..."
-HPU_GENERATE_KEYS_MESSAGE="Generando claves..."
-HPU_DONE_MESSAGE="Listo"
-HPU_PROCESS_ERROR_MESSAGE="$HPU_ERROR_MESSAGE Ha ocurrido un error, por favor reportar a nube@pragmore.com con el siguiente mensaje: "
+readonly NUBE_UPLOAD_MESSAGE="Subir a \e[34m$NUBE_DOMAIN\e[0m"
+readonly NUBE_COPY_CONFIG_MESSAGE="Copiar configuracion inicial..."
+readonly NUBE_RUNNING_COMPOSER_MESSAGE="Instalando composer..." 
+readonly NUBE_FRAMEWORK_MESSAGE="Framework encontrado:" 
+readonly NUBE_MIGRATIONS_MESSAGES="Corriendo migraciones..." 
+readonly NUBE_CACHE_CONFIG_MESSAGE="Cacheando configuracion..."
+readonly NUBE_CACHE_ROUTES_MESSAGE="Cacheando rutas..."
+readonly NUBE_CACHE_VIEWS_MESSAGE="Cacheando vistas..."
+readonly NUBE_GENERATE_KEYS_MESSAGE="Generando claves..."
+readonly NUBE_DONE_MESSAGE="Listo"
+readonly NUBE_PROCESS_ERROR_MESSAGE="$NUBE_ERROR_MESSAGE Ha ocurrido un error.
+Por favor reportar a nube@pragmore.com con el siguiente mensaje: "
 
-HPU_DB_CONN="mysql"
-HPU_DB_HOST="127.0.0.1"
-HPU_DB_PORT="3306"
-HPU_DB_USER="root"
-HPU_DB_PASS="wGXFT4x3hyeAQtC"
+readonly NUBE_DB_CONN="mysql"
+readonly NUBE_DB_HOST="127.0.0.1"
+readonly NUBE_DB_PORT="3306"
+readonly NUBE_DB_USER="root"
+readonly NUBE_DB_PASS="wGXFT4x3hyeAQtC"
 
-_hpu_welcome() {
-    echo -e "\e[36;1mnube.pragmore.com\e[0m 🚀 $HPU_UPLOAD_MESSAGE"
+welcome() {
+  echo -e "\e[36;1mnube.pragmore.com\e[0m 🚀 $NUBE_UPLOAD_MESSAGE"
 }
 
-_hpu_done() {
-    echo -e "\e[1;32m$HPU_DONE_MESSAGE\e[0m → 🔗 \e[34;4m$HPU_URL\e[0m"
+finish() {
+  echo -e "\e[1;32m$NUBE_DONE_MESSAGE\e[0m → 🔗 \e[34;4m$NUBE_URL\e[0m"
 }
 
-_hpu_cd_web_path() {
-    [ ! -d $HPU_PATH ] && echo -e "$HPU_PROCESS_ERROR_MESSAGE No se encuentra $HPU_PATH" && exit
-    cd $HPU_PATH
+cd_web_path() {
+  [ ! -d $NUBE_PATH ] \
+    && echo -e "$NUBE_PROCESS_ERROR_MESSAGE No se encuentra $NUBE_PATH" \
+    && exit
+  cd $NUBE_PATH
 }
 
-_hpu_deploy_files() {
-    git --work-tree=$HPU_PATH --git-dir=$HPU_GIT_DIR checkout -f -q $HPU_GIT_BRANCH 
+deploy_files() {
+  git --work-tree=$NUBE_PATH --git-dir=$NUBE_GIT_DIR checkout -f -q $NUBE_GIT_BRANCH 
 }
 
-_hpu_create_db() {
-    echo "CREATE DATABASE IF NOT EXISTS $HPU_SLUG" | \
-        mysql -u$HPU_DB_USER -p$HPU_DB_PASS --host=$HPU_DB_HOST --port=$HPU_DB_PORT 2> /dev/null
+create_db() {
+  echo "CREATE DATABASE IF NOT EXISTS $NUBE_SLUG" \
+    | mysql -u$NUBE_DB_USER -p$NUBE_DB_PASS \
+      --host=$NUBE_DB_HOST --port=$NUBE_DB_PORT 2> /dev/null
 }
 
-_hpu_dotenv() {
-    [ ! -f .env ] && [ -f .env.example ] && echo -e -n $HPU_COPY_CONFIG_MESSAGE \
-        && (cp .env.example .env && echo -e $HPU_OK_MESSAGE || echo -e $HPU_ERROR_MESSAGE)
+dotenv() {
+  [ ! -f .env ] && [ -f .env.example ] && echo -e -n $NUBE_COPY_CONFIG_MESSAGE \
+    && (cp .env.example .env && echo -e $NUBE_OK_MESSAGE || echo -e $NUBE_ERROR_MESSAGE)
 }
 
-_hpu_composer_install() {
-    [ -f composer.json ] && echo -e -n $HPU_RUNNING_COMPOSER_MESSAGE \
-        && (composer install --optimize-autoloader --no-dev -n -q && echo -e $HPU_OK_MESSAGE  || echo -e $HPU_ERROR_MESSAGE)
+composer_install() {
+  [ -f composer.json ] && echo -e -n $NUBE_RUNNING_COMPOSER_MESSAGE \
+    && (composer install --optimize-autoloader --no-dev -n -q \
+        && echo -e $NUBE_OK_MESSAGE  || echo -e $NUBE_ERROR_MESSAGE)
 }
 
-_hpu_framework_found() {
-    echo -e "$HPU_FRAMEWORK_MESSAGE \e[1m$1\e[0m"
+framework_found() {
+  echo -e "$NUBE_FRAMEWORK_MESSAGE \e[1m$1\e[0m"
 }
 
-_hpu_laravel_dotenv() {
-    sed -i "s#APP_URL=.*#APP_URL=$HPU_URL#g" .env
+laravel_dotenv() {
+  sed -i "s#APP_URL=.*#APP_URL=$NUBE_URL#g" .env
 
-    sed -i "s/DB_CONNECTION=.*/DB_CONNECTION=$HPU_DB_CONN/g" .env
-    sed -i "s/DB_HOST=.*/DB_HOST=$HPU_DB_HOST/g" .env
-    sed -i "s/DB_DATABASE=.*/DB_DATABASE=$HPU_SLUG/g" .env
-    sed -i "s/DB_PORT=.*/DB_PORT=$HPU_DB_PORT/g" .env
-    sed -i "s/DB_USERNAME=.*/DB_USERNAME=$HPU_DB_USER/g" .env
-    sed -i "s/DB_PASSWORD=.*/DB_PASSWORD=$HPU_DB_PASS/g" .env
+  sed -i "s/DB_CONNECTION=.*/DB_CONNECTION=$NUBE_DB_CONN/g" .env
+  sed -i "s/DB_HOST=.*/DB_HOST=$NUBE_DB_HOST/g" .env
+  sed -i "s/DB_DATABASE=.*/DB_DATABASE=$NUBE_SLUG/g" .env
+  sed -i "s/DB_PORT=.*/DB_PORT=$NUBE_DB_PORT/g" .env
+  sed -i "s/DB_USERNAME=.*/DB_USERNAME=$NUBE_DB_USER/g" .env
+  sed -i "s/DB_PASSWORD=.*/DB_PASSWORD=$NUBE_DB_PASS/g" .env
 
-    [ ! $(grep APP_KEY=base .env) ] && echo -e -n $HPU_GENERATE_KEYS_MESSAGE && php artisan key:generate
+  [ ! $(grep APP_KEY=base .env) ] && echo -e -n $NUBE_GENERATE_KEYS_MESSAGE \
+    && php artisan key:generate
 }
 
-_hpu_laravel_fix_max_key_bug() {
-    grep Schema::defaultStringLength app/Providers/AppServiceProvider.php || sed -i '/boot()/{N;N;
-        a \ \ \ \ \ \ \ \ \\Illuminate\\Support\\Facades\\Schema::defaultStringLength(191); /* Max key error https://github.com/laravel/framework/issues/24711 */
-    }' app/Providers/AppServiceProvider.php 
+laravel_fix_max_key_bug() {
+  local provider_file="app/Providers/AppServiceProvider.php" 
+  grep Schema::defaultStringLength $provider_file || sed -i '/boot()/{N;N;
+    a \ \ \ \ \ \ \ \ \\Illuminate\\Support\\Facades\\Schema::defaultStringLength(191); /* Max key error https://github.com/laravel/framework/issues/24711 */
+  }' $provider_file 
 }
 
-_hpu_laravel_deploy() {
-    echo -e -n $HPU_CACHE_CONFIG_MESSAGE && php artisan config:cache -q && echo -e $HPU_OK_MESSAGE  || echo -e $HPU_ERROR_MESSAGE
-    echo -e -n $HPU_CACHE_ROUTES_MESSAGE && php artisan route:cache -q && echo -e $HPU_OK_MESSAGE  || echo -e $HPU_ERROR_MESSAGE
-    echo -e -n $HPU_CACHE_VIEWS_MESSAGE && php artisan view:cache -q && echo -e $HPU_OK_MESSAGE  || echo -e $HPU_ERROR_MESSAGE
+laravel_deploy() {
+  echo -e -n $NUBE_CACHE_CONFIG_MESSAGE && php artisan config:cache -q \
+    && echo -e $NUBE_OK_MESSAGE  || echo -e $NUBE_ERROR_MESSAGE
+  echo -e -n $NUBE_CACHE_ROUTES_MESSAGE && php artisan route:cache -q \
+    && echo -e $NUBE_OK_MESSAGE  || echo -e $NUBE_ERROR_MESSAGE
+  echo -e -n $NUBE_CACHE_VIEWS_MESSAGE && php artisan view:cache -q \
+    && echo -e $NUBE_OK_MESSAGE  || echo -e $NUBE_ERROR_MESSAGE
 }
 
-_hpu_laravel_migrate() {
-    echo -e -n $HPU_MIGRATIONS_MESSAGES && php artisan migrate --force
+laravel_migrate() {
+  echo -e -n $NUBE_MIGRATIONS_MESSAGES && php artisan migrate --force
 }
 
-_hpu_welcome
-_hpu_cd_web_path
-_hpu_deploy_files
-_hpu_create_db
-_hpu_dotenv
-_hpu_composer_install
+welcome
+cd_web_path
+deploy_files
+create_db
+dotenv
+composer_install
 
 # Laravel
 if [ -f artisan ]; then
-    _hpu_framework_found "Laravel"
-    _hpu_laravel_dotenv
-    _hpu_laravel_fix_max_key_bug
-    _hpu_laravel_deploy
-    _hpu_laravel_migrate
+  framework_found "Laravel"
+  laravel_dotenv
+  laravel_fix_max_key_bug
+  laravel_deploy
+  laravel_migrate
 fi
 
-_hpu_done
+finish
