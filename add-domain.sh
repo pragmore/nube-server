@@ -1,6 +1,5 @@
 #!/bin/bash
 DOMAIN=$1
-REPLACE_DOMAIN="REPLACE_DOMAIN"
 WEB_PATH="$HOME/www/$DOMAIN"
 PUBLIC_PATH="$WEB_PATH/public"
 echo "creating folder"
