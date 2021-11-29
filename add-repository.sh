@@ -2,9 +2,10 @@
 #
 # Create new repository
 
-DOMAIN=$1
+NAME=$1
+DOMAIN=${2:-$1}
 
-REPO_DIR="$HOME/git/$DOMAIN"
+REPO_DIR="$HOME/git/$NAME"
 POST_UPDATE_FILE="$REPO_DIR/hooks/post-update"
 
 NUBE_SLUG=$(echo $DOMAIN | sed 's/[-\.]/_/g')
