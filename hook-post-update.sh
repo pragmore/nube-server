@@ -30,6 +30,7 @@ Por favor reportar a nube@pragmore.com con el siguiente mensaje: "
 readonly NUBE_DB_CONN="mysql"
 readonly NUBE_DB_HOST="127.0.0.1"
 readonly NUBE_DB_PORT="3306"
+readonly NUBE_DB_NAME=$NUBE_SLUG
 
 # Export user secrets
 [ -f $NUBE_SECRETS_FILE ] && $(gpg  -q --decrypt $NUBE_SECRETS_FILE)
@@ -73,7 +74,7 @@ laravel_dotenv() {
 
   sed -i "s/DB_CONNECTION=.*/DB_CONNECTION=$NUBE_DB_CONN/g" .env
   sed -i "s/DB_HOST=.*/DB_HOST=$NUBE_DB_HOST/g" .env
-  sed -i "s/DB_DATABASE=.*/DB_DATABASE=$NUBE_SLUG/g" .env
+  sed -i "s/DB_DATABASE=.*/DB_DATABASE=$NUBE_DB_NAME/g" .env
   sed -i "s/DB_PORT=.*/DB_PORT=$NUBE_DB_PORT/g" .env
   sed -i "s/DB_USERNAME=.*/DB_USERNAME=$NUBE_DB_USER/g" .env
   sed -i "s/DB_PASSWORD=.*/DB_PASSWORD=$NUBE_DB_PASS/g" .env
