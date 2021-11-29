@@ -5,6 +5,7 @@
 readonly NUBE_DOMAIN="$1"
 readonly NUBE_GIT_DIR="$2"
 readonly NUBE_GIT_BRANCH=main
+readonly NUBE_SECRETS_FILE="$HOME/secrets.gpg"
 
 readonly NUBE_PATH="/var/www/$NUBE_DOMAIN"
 readonly NUBE_SLUG=$(echo $NUBE_DOMAIN | sed 's/[-\.]/_/g')
@@ -29,8 +30,9 @@ Por favor reportar a nube@pragmore.com con el siguiente mensaje: "
 readonly NUBE_DB_CONN="mysql"
 readonly NUBE_DB_HOST="127.0.0.1"
 readonly NUBE_DB_PORT="3306"
-readonly NUBE_DB_USER="root"
-readonly NUBE_DB_PASS="wGXFT4x3hyeAQtC"
+
+# Export user secrets
+[ -f $NUBE_SECRETS_FILE ] && $(gpg  -q --decrypt $NUBE_SECRETS_FILE)
 
 welcome() {
   echo -e "\e[36;1mnube.pragmore.com\e[0m 🚀 $NUBE_UPLOAD_MESSAGE"
