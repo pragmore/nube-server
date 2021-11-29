@@ -32,8 +32,13 @@ echo "# Generated on $(date)" >> $POST_UPDATE_FILE
 echo "nube-hook-post-update \"$DOMAIN\" \"$REPO_DIR\"" >> $POST_UPDATE_FILE
 chmod a+x $POST_UPDATE_FILE
 
-echo "Copy this in mysql\n-----\n";
+echo "Copy this in mysql"
+echo ""
+echo "-----"
+echo ""
 echo "CREATE DATABASE IF NOT EXISTS $NUBE_SLUG;" 
 echo "GRANT ALL PRIVILEGES ON $NUBE_SLUG . * TO '$NUBE_DB_USER'@'$NUBE_DB_HOST';"
-echo "FLUSH PRIVILEGES;";
-echo "\n-----\n";
+echo "FLUSH PRIVILEGES;"
+echo ""
+echo "-----"
+echo ""
