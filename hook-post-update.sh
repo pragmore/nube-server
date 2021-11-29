@@ -57,6 +57,14 @@ deploy_files() {
 dotenv() {
   [ ! -f .env ] && [ -f .env.example ] && echo -e -n $NUBE_COPY_CONFIG_MESSAGE \
     && (cp .env.example .env && echo -e $NUBE_OK_MESSAGE || echo -e $NUBE_ERROR_MESSAGE)
+  [ -f .env ] && sed -i "s/#NUBE_ROOT#/$NUBE_PATH/g" .env
+  [ -f .env ] && sed -i "s/#NUBE_URL#/$NUBE_URL/g" .env
+  [ -f .env ] && sed -i "s/#NUBE_DB_CONN#/$NUBE_DB_CONN/g" .env
+  [ -f .env ] && sed -i "s/#NUBE_DB_HOST#/$NUBE_DB_HOST/g" .env
+  [ -f .env ] && sed -i "s/#NUBE_DB_PORT#/$NUBE_DB_PORT/g" .env
+  [ -f .env ] && sed -i "s/#NUBE_DB_NAME#/$NUBE_DB_NAME/g" .env
+  [ -f .env ] && sed -i "s/#NUBE_DB_USER#/$NUBE_DB_USER/g" .env
+  [ -f .env ] && sed -i "s/#NUBE_DB_PASS#/$NUBE_DB_PASS/g" .env
 }
 
 composer_install() {
