@@ -18,7 +18,7 @@ else
     echo "update post update hook"
 fi
 
-echo "#!/bin/sh" > $POST_UPDATE_FILE
-echo "# Generated on $(date)" > $POST_UPDATE_FILE
-echo "hook-post-update \"$DOMAIN\" \"$REPO_DIR\"" > $POST_UPDATE_FILE
+echo '#!/bin/bash' > $POST_UPDATE_FILE
+echo "# Generated on $(date)" >> $POST_UPDATE_FILE
+echo "hook-post-update.sh \"$DOMAIN\" \"$REPO_DIR\"" >> $POST_UPDATE_FILE
 chmod a+x $POST_UPDATE_FILE
