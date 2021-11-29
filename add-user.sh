@@ -10,7 +10,7 @@ NEW_USER_HOME="/home/$NEW_USER"
 DB_USER="${NEW_USER}_$(php -r "echo substr(md5(time()), 0, 16);")"
 DB_PASS=$(openssl rand -base64 32)
 
-useradd --shell /bin/false --create-home $NEW_USER 
+useradd --shell $(command -v git-shell) --create-home $NEW_USER 
 
 # Create db user
 echo "create user '$DB_USER'@'127.0.0.1' IDENTIFIED BY '$DB_PASS';" | mysql 
