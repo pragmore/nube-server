@@ -5,7 +5,7 @@
 NAME=$1
 DOMAIN=$2
 
-REPO_DIR="$HOME/git/$NAME.git"
+REPO_DIR="$HOME/git/$NAME"
 POST_UPDATE_FILE="$REPO_DIR/hooks/post-update"
 
 if [ ! -d "$REPO_DIR" ]; then
