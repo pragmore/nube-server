@@ -53,12 +53,6 @@ deploy_files() {
   git --work-tree=$NUBE_PATH --git-dir=$NUBE_GIT_DIR checkout -f -q $NUBE_GIT_BRANCH 
 }
 
-create_db() {
-  echo "CREATE DATABASE IF NOT EXISTS $NUBE_SLUG" \
-    | mysql -u$NUBE_DB_USER -p$NUBE_DB_PASS \
-      --host=$NUBE_DB_HOST --port=$NUBE_DB_PORT 2> /dev/null
-}
-
 dotenv() {
   [ ! -f .env ] && [ -f .env.example ] && echo -e -n $NUBE_COPY_CONFIG_MESSAGE \
     && (cp .env.example .env && echo -e $NUBE_OK_MESSAGE || echo -e $NUBE_ERROR_MESSAGE)
@@ -111,7 +105,6 @@ laravel_migrate() {
 welcome
 cd_web_path
 deploy_files
-create_db
 dotenv
 composer_install
 
