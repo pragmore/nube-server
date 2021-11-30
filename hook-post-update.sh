@@ -2,9 +2,9 @@
 #
 # Deploy app 
 
-readonly NUBE_DOMAIN="$1"
-readonly NUBE_GIT_DIR="$2"
-readonly NUBE_GIT_BRANCH=main
+readonly NUBE_REFS="$1"
+readonly NUBE_DOMAIN="$2"
+readonly NUBE_GIT_DIR="$3"
 readonly NUBE_SECRETS_FILE="$HOME/secrets.gpg"
 
 readonly NUBE_PATH="/var/www/$NUBE_DOMAIN"
@@ -51,7 +51,7 @@ cd_web_path() {
 }
 
 deploy_files() {
-  git --work-tree=$NUBE_PATH --git-dir=$NUBE_GIT_DIR checkout -f -q $NUBE_GIT_BRANCH 
+  git --work-tree=$NUBE_PATH --git-dir=$NUBE_GIT_DIR checkout -f -q $NUBE_REFS
 }
 
 dotenv() {

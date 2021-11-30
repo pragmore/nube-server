@@ -29,7 +29,7 @@ fi
 
 echo '#!/bin/bash' > $POST_UPDATE_FILE
 echo "# Generated on $(date)" >> $POST_UPDATE_FILE
-echo "nube-hook-post-update \"$DOMAIN\" \"$REPO_DIR\"" >> $POST_UPDATE_FILE
+echo "nube-hook-post-update \$1 \"$DOMAIN\" \"$REPO_DIR\"" >> $POST_UPDATE_FILE
 chmod a+x $POST_UPDATE_FILE
 
 echo "Copy this in mysql"
