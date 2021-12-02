@@ -1,4 +1,4 @@
 #!/bin/bash
 #
 # motd banner 
-echo -e "\e[36;1mnube.pragmore.com\e[0m 🚀"
+echo -e "\e[34;4mhttps://nube.pragmore.com\e[0m 🚀"
