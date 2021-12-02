@@ -14,7 +14,7 @@ readonly NUBE_URL="https://$NUBE_DOMAIN"
 readonly NUBE_OK_MESSAGE="\e[32;1m ok\e[0m"
 readonly NUBE_ERROR_MESSAGE="\e[31;1m error\e[0m"
 
-readonly NUBE_UPLOAD_MESSAGE="Subir a \e[34m$NUBE_DOMAIN\e[0m"
+readonly NUBE_UPLOAD_MESSAGE="Haciendo el deploy a \e[34m$NUBE_DOMAIN\e[0m"
 readonly NUBE_COPY_CONFIG_MESSAGE="Copiar configuracion inicial..."
 readonly NUBE_RUNNING_COMPOSER_MESSAGE="Instalando composer..." 
 readonly NUBE_FRAMEWORK_MESSAGE="Framework encontrado:" 
@@ -36,7 +36,8 @@ readonly NUBE_DB_NAME=$NUBE_SLUG
 [ -f $NUBE_SECRETS_FILE ] && $(gpg  -q --decrypt $NUBE_SECRETS_FILE)
 
 welcome() {
-  echo -e "\e[36;1mnube.pragmore.com\e[0m 🚀 $NUBE_UPLOAD_MESSAGE"
+  echo -e "☁️  \e[35;1mNube\e[0m, by Pragmore - \e[34;4mhttps://nube.pragmore.com\e[0m 🚀"
+  echo -e "$NUBE_UPLOAD_MESSAGE"
 }
 
 finish() {
