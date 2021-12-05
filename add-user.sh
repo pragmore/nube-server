@@ -18,8 +18,8 @@ echo "create user '$DB_USER'@'127.0.0.1' IDENTIFIED BY '$DB_PASS';" | mysql
 cd "/home/$NEW_USER"
 
 mkdir -p .ssh
-echo $NEW_USER_PUBKEY > ~/.ssh/authorized_keys
-chmod 0600 ~/.ssh/authorized_keys
+echo $NEW_USER_PUBKEY >> .ssh/authorized_keys
+chmod 0600 .ssh/authorized_keys
 
 # Create secret
 touch secrets 
