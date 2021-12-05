@@ -21,7 +21,7 @@ if [ ! -d "$REPO_DIR" ]; then
     echo "create repository folder" 1>&2
     mkdir -p $REPO_DIR
     cd $REPO_DIR
-    git init --bare
+    git init --bare 1>&2
     echo "create post update hook" 1>&2
 else
     echo "update post update hook" 1>&2
