@@ -18,13 +18,13 @@ readonly NUBE_SECRETS_FILE="$HOME/secrets.gpg"
 [ -f $NUBE_SECRETS_FILE ] && $(gpg  -q --decrypt $NUBE_SECRETS_FILE)
 
 if [ ! -d "$REPO_DIR" ]; then
-    echo "create repository folder"
+    echo "create repository folder" 1>&2
     mkdir -p $REPO_DIR
     cd $REPO_DIR
     git init --bare
-    echo "create post update hook"
+    echo "create post update hook" 1>&2
 else
-    echo "update post update hook"
+    echo "update post update hook" 1>&2
 fi
 
 echo '#!/bin/bash' > $POST_UPDATE_FILE
@@ -32,13 +32,13 @@ echo "# Generated on $(date)" >> $POST_UPDATE_FILE
 echo "nube-hook-post-update \$1 \"$DOMAIN\" \"$REPO_DIR\"" >> $POST_UPDATE_FILE
 chmod a+x $POST_UPDATE_FILE
 
-echo "Copy this in mysql"
+echo "-- Copy this in mysql"
 echo ""
-echo "-----"
+echo "-- -----"
 echo ""
 echo "CREATE DATABASE IF NOT EXISTS $NUBE_SLUG;" 
 echo "GRANT ALL PRIVILEGES ON $NUBE_SLUG . * TO '$NUBE_DB_USER'@'$NUBE_DB_HOST';"
 echo "FLUSH PRIVILEGES;"
 echo ""
-echo "-----"
+echo "-- -----"
 echo ""
