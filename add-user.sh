@@ -35,4 +35,4 @@ rm secrets
 mkdir git-shell-commands
 sudo ln -s /var/www/server/no-interactive-login.sh git-shell-commands/no-interactive-login
 
-chown -R $NEW_USER:$NEW_USER $USER_HOME
+chown -R $NEW_USER:$NEW_USER $NEW_USER_HOME
