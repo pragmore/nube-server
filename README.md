@@ -28,9 +28,15 @@ Example
 
 ## Create user
    
-   add-user.sh <user> <email> [<pem>] 
+    add-user.sh <user> <email> [<pem>] 
 
 Example
 
-   add-user.sh johndoe johndoe@example.com 
-   add-user.sh johndoe johndoe@example.com "ssh-rsa AAA...(public key pem)"
+    add-user.sh johndoe johndoe@example.com 
+    add-user.sh johndoe johndoe@example.com "ssh-rsa AAA...(public key pem)"
+
+Creating a user and a default app
+
+    add-user.sh johndoe johndoe@example.com "ssh-rsa AAA...(public key pem)"
+    sudo runuser -u johndoe -- ns johndoe
+    sudo runuser -u johndoe -- nr default johndoe.nube.pragmore.com | sudo mysql
