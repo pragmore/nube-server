@@ -36,17 +36,13 @@ readonly NUBE_DB_NAME=$NUBE_SLUG
 [ -f $NUBE_SECRETS_FILE ] && $(gpg  -q --decrypt $NUBE_SECRETS_FILE)
 
 welcome() {
-  echo ""
   echo -e "☁️  \e[35;1mNube\e[0m, by Pragmore - \e[34;4mhttps://nube.pragmore.com\e[0m 🚀"
-  echo ""
   echo -e "$NUBE_UPLOAD_MESSAGE"
 }
 
 finish() {
   echo -e "\e[1;32m$NUBE_DONE_MESSAGE\e[0m → 🔗 \e[34;4m$NUBE_URL\e[0m"
-  echo ""
   echo -e "Si necesitas ayuda puedes ir a \e[34;4mhttps://nube.pragmore.com/ayuda\e[0m"
-  echo ""
 }
 
 cd_web_path() {
