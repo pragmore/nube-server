@@ -93,6 +93,10 @@ laravel_dotenv() {
     && php artisan key:generate --force -q -n
 }
 
+laravel_write_permissions() {
+  chmod -R a+w storage/
+}
+
 laravel_fix_max_key_bug() {
   local provider_file="app/Providers/AppServiceProvider.php" 
   grep --silent Schema::defaultStringLength $provider_file || sed -i '/boot()/{N;N;
@@ -123,6 +127,7 @@ composer_install
 if [ -f artisan ]; then
   framework_found "Laravel"
   laravel_dotenv
+  laravel_write_permissions
   laravel_fix_max_key_bug
   laravel_deploy
   laravel_migrate
