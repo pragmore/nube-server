@@ -70,7 +70,7 @@ dotenv() {
 }
 
 composer_install() {
-  [ -f composer.json ] && echo -e -n $NUBE_RUNNING_COMPOSER_MESSAGE \
+  [ -f composer.json ] && echo -e $NUBE_RUNNING_COMPOSER_MESSAGE \
     && (composer install --optimize-autoloader --no-dev -n -q \
         && echo -e $NUBE_OK_MESSAGE  || echo -e $NUBE_ERROR_MESSAGE)
 }
@@ -90,7 +90,8 @@ laravel_dotenv() {
   sed -i "s/DB_PASSWORD=.*/DB_PASSWORD=$NUBE_DB_PASS/g" .env
 
   [ ! $(grep --silent APP_KEY=base .env) ] && echo -e -n $NUBE_GENERATE_KEYS_MESSAGE \
-    && php artisan key:generate --force -q -n
+    && php artisan key:generate --force -q -n \
+    && echo -e $NUBE_OK_MESSAGE  || echo -e $NUBE_ERROR_MESSAGE
 }
 
 laravel_write_permissions() {
@@ -114,7 +115,7 @@ laravel_deploy() {
 }
 
 laravel_migrate() {
-  echo -e -n $NUBE_MIGRATIONS_MESSAGES && php artisan migrate --force
+  echo -e $NUBE_MIGRATIONS_MESSAGES && php artisan migrate --force
 }
 
 welcome
