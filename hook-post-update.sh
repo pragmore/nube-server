@@ -90,7 +90,7 @@ laravel_dotenv() {
   sed -i "s/DB_PASSWORD=.*/DB_PASSWORD=$NUBE_DB_PASS/g" .env
 
   [ ! $(grep APP_KEY=base .env) ] && echo -e -n $NUBE_GENERATE_KEYS_MESSAGE \
-    && php artisan key:generate
+    && php artisan key:generate --force -q -n
 }
 
 laravel_fix_max_key_bug() {
