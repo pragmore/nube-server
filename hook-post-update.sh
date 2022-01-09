@@ -89,13 +89,13 @@ laravel_dotenv() {
   sed -i "s/DB_USERNAME=.*/DB_USERNAME=$NUBE_DB_USER/g" .env
   sed -i "s/DB_PASSWORD=.*/DB_PASSWORD=$NUBE_DB_PASS/g" .env
 
-  [ ! $(grep APP_KEY=base .env) ] && echo -e -n $NUBE_GENERATE_KEYS_MESSAGE \
+  [ ! $(grep --silent APP_KEY=base .env) ] && echo -e -n $NUBE_GENERATE_KEYS_MESSAGE \
     && php artisan key:generate --force -q -n
 }
 
 laravel_fix_max_key_bug() {
   local provider_file="app/Providers/AppServiceProvider.php" 
-  grep Schema::defaultStringLength $provider_file || sed -i '/boot()/{N;N;
+  grep --silent Schema::defaultStringLength $provider_file || sed -i '/boot()/{N;N;
     a \ \ \ \ \ \ \ \ \\Illuminate\\Support\\Facades\\Schema::defaultStringLength(191); /* Max key error https://github.com/laravel/framework/issues/24711 */
   }' $provider_file 
 }
