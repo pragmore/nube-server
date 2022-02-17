@@ -1,0 +1,5 @@
+# LetsEncrypt https://github.com/acmesh-official/acme.sh/wiki/Stateless-Mode
+location ~ ^/\.well-known/acme-challenge/([-_a-zA-Z0-9]+)$ {
+  default_type text/plain;
+  return 200 "$1.zdY2Cy1M4pNEMMAcWlgvmpxoOfkk0NgRTse6sPElPBw";
+}
