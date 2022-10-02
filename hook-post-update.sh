@@ -57,6 +57,11 @@ deploy_files() {
 }
 
 dotenv() {
+  NUBE_REF_ENV=$(git --git-dir=$NUBE_GIT_DIR notes --ref=env list | tail -n1 | awk  '{ print $2 }')
+  [ ! -z "$NUBE_REF_ENV" ] && git --git-dir=$NUBE_GIT_DIR notes --ref=env show $NUBE_REF_ENV > .env
+  echo "Ref encontrada! $NUBE_REF_ENV"
+  cat .env
+
   [ ! -f .env ] && [ -f .env.example ] && echo -e -n $NUBE_COPY_CONFIG_MESSAGE \
     && (cp .env.example .env && echo -e $NUBE_OK_MESSAGE || echo -e $NUBE_ERROR_MESSAGE)
   [ -f .env ] && sed -i "s@#NUBE_ROOT#@$NUBE_PATH@g" .env
