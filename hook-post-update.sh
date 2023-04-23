@@ -17,6 +17,7 @@ readonly NUBE_ERROR_MESSAGE="\e[31;1m error\e[0m"
 readonly NUBE_UPLOAD_MESSAGE="Haciendo el deploy a \e[34m$NUBE_DOMAIN\e[0m"
 readonly NUBE_COPY_CONFIG_MESSAGE="Copiar configuracion inicial..."
 readonly NUBE_RUNNING_COMPOSER_MESSAGE="Instalando composer..." 
+readonly NUBE_RUNNING_NPM_MESSAGE="Instalando npm..."
 readonly NUBE_FRAMEWORK_MESSAGE="Framework encontrado:" 
 readonly NUBE_MIGRATIONS_MESSAGES="Corriendo migraciones..." 
 readonly NUBE_CACHE_CONFIG_MESSAGE="Cacheando configuracion..."
@@ -79,6 +80,12 @@ composer_install() {
         && echo -e $NUBE_OK_MESSAGE  || echo -e $NUBE_ERROR_MESSAGE)
 }
 
+npm_install() {
+  [ -f package.json ] && echo -e $NUBE_RUNNING_NPM_MESSAGE \
+    && (npm ci \
+        && echo -e $NUBE_OK_MESSAGE  || echo -e $NUBE_ERROR_MESSAGE)
+}
+
 framework_found() {
   echo -e "$NUBE_FRAMEWORK_MESSAGE \e[1m$1\e[0m"
 }
@@ -126,6 +133,7 @@ welcome
 cd_web_path
 deploy_files
 dotenv
+npm_install
 composer_install
 
 # Laravel
