@@ -82,7 +82,7 @@ composer_install() {
 
 npm_install() {
   [ -f package.json ] && echo -e $NUBE_RUNNING_NPM_MESSAGE \
-    && (npm ci \
+    && (NODE_OPTIONS=--max-old-space-size=950 npm ci \
         && echo -e $NUBE_OK_MESSAGE  || echo -e $NUBE_ERROR_MESSAGE)
 }
 
