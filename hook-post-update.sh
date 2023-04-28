@@ -10,9 +10,14 @@ readonly NUBE_SECRETS_FILE="$HOME/secrets.gpg"
 readonly NUBE_PATH="/var/www/$NUBE_DOMAIN"
 readonly NUBE_SLUG=$(echo $NUBE_DOMAIN | sed 's/[-\.]/_/g')
 readonly NUBE_URL="https://$NUBE_DOMAIN"
+readonly NUBE_CURRENT_PATH="$HOME/www/$DOMAIN"
+readonly NUBE_PREV_PATH="$HOME/www/$DOMAIN-prev"
+readonly NUBE_DEPLOY_PATH="$HOME/www/$DOMAIN-deploy"
 
 readonly NUBE_OK_MESSAGE="\e[32;1m ok\e[0m"
 readonly NUBE_ERROR_MESSAGE="\e[31;1m error\e[0m"
+readonly NUBE_DEPLOY_ERROR_MESSAGE="\e[31;1m Ha ocurrido un error, se mantiene la versión anterior\e[0m"
+NUBE_DEPLOY_ERROR=false
 
 readonly NUBE_UPLOAD_MESSAGE="Haciendo el deploy a \e[34m$NUBE_DOMAIN\e[0m"
 readonly NUBE_COPY_CONFIG_MESSAGE="Copiar configuracion inicial..."
@@ -37,34 +42,50 @@ readonly NUBE_DB_NAME=$NUBE_SLUG
 # Export user secrets
 [ -f $NUBE_SECRETS_FILE ] && $(gpg  -q --decrypt $NUBE_SECRETS_FILE)
 
+nube_error() {
+  NUBE_DEPLOY_ERROR=true
+  echo -e $NUBE_ERROR_MESSAGE
+}
+
 welcome() {
   echo -e "☁️  \e[35;1mNube\e[0m, by Pragmore - \e[34;4mhttps://nube.pragmore.com\e[0m 🚀"
   echo -e "$NUBE_UPLOAD_MESSAGE"
 }
 
-finish() {
-  echo -e "\e[1;32m$NUBE_DONE_MESSAGE\e[0m → 🔗 \e[34;4m$NUBE_URL\e[0m"
+help_message() {
   echo -e "Si necesitas ayuda puedes ir a \e[34;4mhttps://nube.pragmore.com/ayuda\e[0m"
 }
 
+finish() {
+  test "$NUBE_DEPLOY_ERROR" = true && echo -e "$NUBE_DEPLOY_ERROR_MESSAGE" && help_message && exit
+  rm -rf "$NUBE_PREV_PATH"
+  mv "$NUBE_CURRENT_PATH" "$NUBE_PREV_PATH"
+  mv "$NUBE_DEPLOY_PATH" "$NUBE_CURRENT_PATH"
+  echo -e "\e[1;32m$NUBE_DONE_MESSAGE\e[0m → 🔗 \e[34;4m$NUBE_URL\e[0m"
+  help_message
+}
+
 cd_web_path() {
+  mkdir -p $NUBE_DEPLOY_PATH
   [ ! -d $NUBE_PATH ] \
     && echo -e "$NUBE_PROCESS_ERROR_MESSAGE No se encuentra $NUBE_PATH" \
     && exit
-  cd $NUBE_PATH
+  cd $NUBE_DEPLOY_PATH
 }
 
 deploy_files() {
-  git --work-tree=$NUBE_PATH --git-dir=$NUBE_GIT_DIR checkout -f -q $NUBE_REFS
+  git --work-tree=$NUBE_DEPLOY_PATH --git-dir=$NUBE_GIT_DIR checkout -f -q $NUBE_REFS
 }
 
 dotenv() {
+  # Try to copy current .env
+  cp "$NUBE_PATH/.env" "$NUBE_DEPLOY_PATH/.env" 2>/dev/null
   # Use .env vars with a note with ref
   NUBE_REF_ENV=$(git --git-dir=$NUBE_GIT_DIR notes --ref=env list | tail -n1 | awk  '{ print $2 }')
   [ ! -z "$NUBE_REF_ENV" ] && git --git-dir=$NUBE_GIT_DIR notes --ref=env show $NUBE_REF_ENV > .env
 
-  [ ! -f .env ] && [ -f .env.example ] && echo -e -n $NUBE_COPY_CONFIG_MESSAGE \
-    && (cp .env.example .env && echo -e $NUBE_OK_MESSAGE || echo -e $NUBE_ERROR_MESSAGE)
+  [ ! -f .env ] && [ -f .env.dist ] && echo -e -n $NUBE_COPY_CONFIG_MESSAGE \
+    && (cp .env.dist .env && echo -e $NUBE_OK_MESSAGE || nube_error)
   [ -f .env ] && sed -i "s@#NUBE_ROOT#@$NUBE_PATH@g" .env
   [ -f .env ] && sed -i "s@#NUBE_URL#@$NUBE_URL@g" .env
   [ -f .env ] && sed -i "s/#NUBE_DB_CONN#/$NUBE_DB_CONN/g" .env
@@ -78,19 +99,19 @@ dotenv() {
 composer_install() {
   [ -f composer.json ] && echo -e $NUBE_RUNNING_COMPOSER_MESSAGE \
     && (composer install --optimize-autoloader --no-dev -n -q \
-        && echo -e $NUBE_OK_MESSAGE  || echo -e $NUBE_ERROR_MESSAGE)
+        && echo -e $NUBE_OK_MESSAGE  || nube_error)
 }
 
 npm_install() {
   [ -f package.json ] && echo -e $NUBE_RUNNING_NPM_MESSAGE \
     && (NODE_OPTIONS=--max-old-space-size=950 npm ci --omit=dev \
-        && echo -e $NUBE_OK_MESSAGE  || echo -e $NUBE_ERROR_MESSAGE)
+        && echo -e $NUBE_OK_MESSAGE  || nube_error)
 }
 
 pm2_restart() {
   [ -f package.json ] && echo -e $NUBE_RESTARTING_PM2_MESSAGE \
     && (pm2 restart $NUBE_DOMAIN \
-        && echo -e $NUBE_OK_MESSAGE  || echo -e $NUBE_ERROR_MESSAGE)
+        && echo -e $NUBE_OK_MESSAGE  || nube_error)
 }
 
 framework_found() {
@@ -109,7 +130,7 @@ laravel_dotenv() {
 
   [ ! $(grep --silent APP_KEY=base .env) ] && echo -e -n $NUBE_GENERATE_KEYS_MESSAGE \
     && php artisan key:generate --force -q -n \
-    && echo -e $NUBE_OK_MESSAGE  || echo -e $NUBE_ERROR_MESSAGE
+    && echo -e $NUBE_OK_MESSAGE  || nube_error
 }
 
 laravel_write_permissions() {
@@ -125,11 +146,11 @@ laravel_fix_max_key_bug() {
 
 laravel_deploy() {
   echo -e -n $NUBE_CACHE_CONFIG_MESSAGE && php artisan config:cache -q \
-    && echo -e $NUBE_OK_MESSAGE  || echo -e $NUBE_ERROR_MESSAGE
+    && echo -e $NUBE_OK_MESSAGE  || nube_error
   echo -e -n $NUBE_CACHE_ROUTES_MESSAGE && php artisan route:cache -q \
-    && echo -e $NUBE_OK_MESSAGE  || echo -e $NUBE_ERROR_MESSAGE
+    && echo -e $NUBE_OK_MESSAGE  || nube_error
   echo -e -n $NUBE_CACHE_VIEWS_MESSAGE && php artisan view:cache -q \
-    && echo -e $NUBE_OK_MESSAGE  || echo -e $NUBE_ERROR_MESSAGE
+    && echo -e $NUBE_OK_MESSAGE  || nube_error
 }
 
 laravel_migrate() {
