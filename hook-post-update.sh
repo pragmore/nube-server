@@ -45,6 +45,7 @@ readonly NUBE_DB_NAME=$NUBE_SLUG
 nube_error() {
   NUBE_DEPLOY_ERROR=true
   echo -e $NUBE_ERROR_MESSAGE
+  echo "Debugging: $NUBE_DEPLOY_ERROR"
 }
 
 welcome() {
@@ -57,6 +58,7 @@ help_message() {
 }
 
 finish() {
+  echo "Debugging: $NUBE_DEPLOY_ERROR"
   test "$NUBE_DEPLOY_ERROR" = true && echo -e "$NUBE_DEPLOY_ERROR_MESSAGE" && help_message && exit
   rm -rf "$NUBE_PREV_PATH"
   mv "$NUBE_CURRENT_PATH" "$NUBE_PREV_PATH"
