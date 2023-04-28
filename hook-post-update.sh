@@ -106,7 +106,7 @@ composer_install() {
 
 npm_install() {
   [ -f package.json ] && echo -e $NUBE_RUNNING_NPM_MESSAGE \
-    && (NODE_OPTIONS=--max-old-space-size=950 npm ci --omit=dev -s \
+    && (NODE_OPTIONS=--max-old-space-size=512 npm ci --omit=dev -s \
         && echo -e $NUBE_OK_MESSAGE  || nube_error)
 }
 
