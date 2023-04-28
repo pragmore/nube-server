@@ -111,7 +111,7 @@ npm_install() {
 }
 
 pm2_restart() {
-  [ -f package.json ] && (pm2 ls > /dev/null | grep  $NUBE_DOMAIN \
+  [ -f package.json ] && (pm2 ls | grep  $NUBE_DOMAIN > /dev/null \
         && (echo -e $NUBE_RESTARTING_PM2_MESSAGE \
           && pm2 restart $NUBE_DOMAIN -s \
           && echo -e $NUBE_OK_MESSAGE  || nube_error))
