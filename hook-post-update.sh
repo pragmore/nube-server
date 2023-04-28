@@ -45,7 +45,6 @@ readonly NUBE_DB_NAME=$NUBE_SLUG
 nube_error() {
   touch "$NUBE_DEPLOY_ERROR"
   echo -e $NUBE_ERROR_MESSAGE
-  echo "Debugging: $NUBE_DEPLOY_ERROR"
 }
 
 nube_start() {
