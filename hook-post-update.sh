@@ -24,7 +24,7 @@ readonly NUBE_UPLOAD_MESSAGE="Haciendo el deploy a \e[34m$NUBE_DOMAIN\e[0m"
 readonly NUBE_COPY_CONFIG_MESSAGE="Copiar configuracion inicial..."
 readonly NUBE_RUNNING_COMPOSER_MESSAGE="Instalando composer..." 
 readonly NUBE_RUNNING_NPM_MESSAGE="Instalando npm..."
-readonly NUBE_RESTARTING_PM2_MESSAGE="Reiniciando..."
+readonly NUBE_RESTARTING_PM2_MESSAGE="Reiniciando servidor de NodeJS..."
 readonly NUBE_FRAMEWORK_MESSAGE="Framework encontrado:" 
 readonly NUBE_MIGRATIONS_MESSAGES="Corriendo migraciones..." 
 readonly NUBE_CACHE_CONFIG_MESSAGE="Cacheando configuracion..."
@@ -113,8 +113,8 @@ npm_install() {
 pm2_restart() {
   [ -f package.json ] && echo -e $NUBE_RESTARTING_PM2_MESSAGE \
     && (pm2 ls | grep  $NUBE_DOMAIN \
-        && pm2 restart $NUBE_DOMAIN \
-        && echo -e $NUBE_OK_MESSAGE  || nube_error)
+        && (pm2 restart $NUBE_DOMAIN \
+          && echo -e $NUBE_OK_MESSAGE  || nube_error))
 }
 
 framework_found() {
