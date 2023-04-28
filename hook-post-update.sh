@@ -17,7 +17,7 @@ readonly NUBE_DEPLOY_PATH="$HOME/www/$NUBE_DOMAIN-deploy"
 readonly NUBE_OK_MESSAGE="\e[32;1m ok\e[0m"
 readonly NUBE_ERROR_MESSAGE="\e[31;1m error\e[0m"
 readonly NUBE_DEPLOY_ERROR_MESSAGE="\e[31;1m Ha ocurrido un error, se mantiene la versión anterior\e[0m"
-NUBE_DEPLOY_ERROR=false
+readonly NUBE_DEPLOY_ERROR="$NUBE_DEPLOY_PATH/.nube_deploy_error"
 
 readonly NUBE_UPLOAD_MESSAGE="Haciendo el deploy a \e[34m$NUBE_DOMAIN\e[0m"
 readonly NUBE_COPY_CONFIG_MESSAGE="Copiar configuracion inicial..."
@@ -43,7 +43,7 @@ readonly NUBE_DB_NAME=$NUBE_SLUG
 [ -f $NUBE_SECRETS_FILE ] && $(gpg  -q --decrypt $NUBE_SECRETS_FILE)
 
 nube_error() {
-  NUBE_DEPLOY_ERROR=true
+  touch "$NUBE_DEPLOY_ERROR"
   echo -e $NUBE_ERROR_MESSAGE
   echo "Debugging: $NUBE_DEPLOY_ERROR"
 }
@@ -58,8 +58,7 @@ help_message() {
 }
 
 finish() {
-  echo "Debugging: $NUBE_DEPLOY_ERROR"
-  test "$NUBE_DEPLOY_ERROR" = true && echo -e "$NUBE_DEPLOY_ERROR_MESSAGE" && help_message && exit
+  test -f "$NUBE_DEPLOY_ERROR" && echo -e "$NUBE_DEPLOY_ERROR_MESSAGE" && help_message && exit
   rm -rf "$NUBE_PREV_PATH"
   mv "$NUBE_CURRENT_PATH" "$NUBE_PREV_PATH"
   mv "$NUBE_DEPLOY_PATH" "$NUBE_CURRENT_PATH"
