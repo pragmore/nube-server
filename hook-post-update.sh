@@ -10,9 +10,9 @@ readonly NUBE_SECRETS_FILE="$HOME/secrets.gpg"
 readonly NUBE_PATH="/var/www/$NUBE_DOMAIN"
 readonly NUBE_SLUG=$(echo $NUBE_DOMAIN | sed 's/[-\.]/_/g')
 readonly NUBE_URL="https://$NUBE_DOMAIN"
-readonly NUBE_CURRENT_PATH="$HOME/www/$DOMAIN"
-readonly NUBE_PREV_PATH="$HOME/www/$DOMAIN-prev"
-readonly NUBE_DEPLOY_PATH="$HOME/www/$DOMAIN-deploy"
+readonly NUBE_CURRENT_PATH="$HOME/www/$NUBE_DOMAIN"
+readonly NUBE_PREV_PATH="$HOME/www/$NUBE_DOMAIN-prev"
+readonly NUBE_DEPLOY_PATH="$HOME/www/$NUBE_DOMAIN-deploy"
 
 readonly NUBE_OK_MESSAGE="\e[32;1m ok\e[0m"
 readonly NUBE_ERROR_MESSAGE="\e[31;1m error\e[0m"
@@ -110,7 +110,8 @@ npm_install() {
 
 pm2_restart() {
   [ -f package.json ] && echo -e $NUBE_RESTARTING_PM2_MESSAGE \
-    && (pm2 restart $NUBE_DOMAIN \
+    && (pm2 ls | grep  $NUBE_DOMAIN \
+        && pm2 restart $NUBE_DOMAIN \
         && echo -e $NUBE_OK_MESSAGE  || nube_error)
 }
 
