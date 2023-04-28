@@ -19,6 +19,7 @@ readonly NUBE_ERROR_MESSAGE="\e[31;1m error\e[0m"
 readonly NUBE_DEPLOY_ERROR_MESSAGE="\e[31;1m Ha ocurrido un error, se mantiene la versión anterior\e[0m"
 readonly NUBE_DEPLOY_ERROR="$NUBE_DEPLOY_PATH/.nube_deploy_error"
 
+readonly NUBE_START_MESSAGE="☁️  \e[35;1mNube\e[0m, by Pragmore - \e[34;4mhttps://nube.pragmore.com\e[0m 🚀"
 readonly NUBE_UPLOAD_MESSAGE="Haciendo el deploy a \e[34m$NUBE_DOMAIN\e[0m"
 readonly NUBE_COPY_CONFIG_MESSAGE="Copiar configuracion inicial..."
 readonly NUBE_RUNNING_COMPOSER_MESSAGE="Instalando composer..." 
@@ -33,6 +34,7 @@ readonly NUBE_GENERATE_KEYS_MESSAGE="Generando claves..."
 readonly NUBE_DONE_MESSAGE="Listo"
 readonly NUBE_PROCESS_ERROR_MESSAGE="$NUBE_ERROR_MESSAGE Ha ocurrido un error.
 Por favor reportar a nube@pragmore.com con el siguiente mensaje: "
+readonly NUBE_HELP_MESSAGE="Si necesitas ayuda puedes ir a \e[34;4mhttps://nube.pragmore.com/ayuda\e[0m"
 
 readonly NUBE_DB_CONN="mysql"
 readonly NUBE_DB_HOST="127.0.0.1"
@@ -49,21 +51,20 @@ nube_error() {
 
 nube_start() {
   rm -rf "$NUBE_DEPLOY_PATH"
-  echo -e "☁️  \e[35;1mNube\e[0m, by Pragmore - \e[34;4mhttps://nube.pragmore.com\e[0m 🚀"
+  echo -e "$NUBE_START_MESSAGE"
   echo -e "$NUBE_UPLOAD_MESSAGE"
 }
 
 help_message() {
-  echo -e "Si necesitas ayuda puedes ir a \e[34;4mhttps://nube.pragmore.com/ayuda\e[0m"
+  echo -e 
 }
 
 finish() {
-  test -f "$NUBE_DEPLOY_ERROR" && echo -e "$NUBE_DEPLOY_ERROR_MESSAGE" && help_message && exit
+  test -f "$NUBE_DEPLOY_ERROR" && echo -e "$NUBE_DEPLOY_ERROR_MESSAGE" && echo -e $NUBE_HELP_MESSAGE && exit
   rm -rf "$NUBE_PREV_PATH"
   mv "$NUBE_CURRENT_PATH" "$NUBE_PREV_PATH"
   mv "$NUBE_DEPLOY_PATH" "$NUBE_CURRENT_PATH"
   echo -e "\e[1;32m$NUBE_DONE_MESSAGE\e[0m → 🔗 \e[34;4m$NUBE_URL\e[0m"
-  help_message
 }
 
 cd_web_path() {
