@@ -48,7 +48,8 @@ nube_error() {
   echo "Debugging: $NUBE_DEPLOY_ERROR"
 }
 
-welcome() {
+nube_start() {
+  rm -rf "$NUBE_DEPLOY_PATH"
   echo -e "☁️  \e[35;1mNube\e[0m, by Pragmore - \e[34;4mhttps://nube.pragmore.com\e[0m 🚀"
   echo -e "$NUBE_UPLOAD_MESSAGE"
 }
@@ -159,7 +160,7 @@ laravel_migrate() {
   echo -e $NUBE_MIGRATIONS_MESSAGES && php artisan migrate --force
 }
 
-welcome
+nube_start
 cd_web_path
 deploy_files
 dotenv
