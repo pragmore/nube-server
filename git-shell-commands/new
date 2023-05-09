@@ -1,0 +1,7 @@
+#!/bin/bash
+echo -e "🎸 \e[35;1mgit.ar\e[0m, by Pragmore - \e[34;4mhttps://git.ar\e[0m"
+mkdir $1
+cd $1
+git init --bare -q
+echo -e "Repository created\n"
+echo -e "  git clone $USER@git.ar:\e[33;1m$1\e[0m"
