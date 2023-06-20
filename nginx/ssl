@@ -9,3 +9,5 @@ ssl_prefer_server_ciphers off;
 # OCSP stapling
 ssl_stapling on;
 ssl_stapling_verify on;
+
+http2 on;
