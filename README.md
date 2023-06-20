@@ -7,11 +7,11 @@
 
 Example
 
-    nr default johndoe.nube.pragmore.com 
+    nr default johndoe.nube.pragmore.com
     nr example.com
 
 ## nd - New domain
-    
+
     nd <domain>
 
 Example
@@ -19,7 +19,7 @@ Example
     nd example.com
 
 ## ns - New subdomain
-    
+
     ns <subdomain>
 
 Example
@@ -27,12 +27,12 @@ Example
     ns johndoe
 
 ## Create user
-   
-    add-user.sh <user> <email> [<pem>] 
+
+    add-user.sh <user> <email> [<pem>]
 
 Example
 
-    add-user.sh johndoe johndoe@example.com 
+    add-user.sh johndoe johndoe@example.com
     add-user.sh johndoe johndoe@example.com "ssh-rsa AAA...(public key pem)"
 
 Creating a user and a default app
