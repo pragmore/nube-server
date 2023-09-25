@@ -21,7 +21,7 @@
     },
      {
       "match": {
-        "host": "dev.ar"
+        "host": ["dev.ar", "*.dev.ar"]
       },
       "action": {
 	"proxy": "http://127.0.0.1:7002"
