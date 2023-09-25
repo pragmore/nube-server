@@ -16,15 +16,16 @@
         "host": "bialet.org"
       },
       "action": {
-        "pass": "upstreams/bialet-lb"
+	"proxy": "http://127.0.0.1:7001"
+      }
+    },
+     {
+      "match": {
+        "host": "dev.ar"
+      },
+      "action": {
+	"proxy": "http://127.0.0.1:7002"
       }
     }
-  ],
-  "upstreams": {
-    "bialet-lb": {
-      "servers": {
-        "127.0.0.1:7001": {}
-      }
-    }
-  }
+  ]
 }
