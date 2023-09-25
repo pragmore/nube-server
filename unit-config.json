@@ -1,0 +1,24 @@
+{
+  "listeners": {
+    "*:80": {
+      "pass": "routes"
+    }
+  },
+  "routes": [
+     {
+      "match": {
+        "host": "bialet.org"
+      },
+      "action": {
+        "pass": "upstreams/bialet-lb"
+      }
+    }
+  ],
+  "upstreams": {
+    "bialet-lb": {
+      "servers": {
+        "127.0.0.1:7001": {}
+      }
+    }
+  }
+}
