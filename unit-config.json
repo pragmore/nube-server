@@ -1,5 +1,11 @@
 {
   "listeners": {
+    "*:443": {
+      "pass": "routes",
+      "tls": {
+        "certificate": ["certbot1"]
+      }
+    },
     "*:80": {
       "pass": "routes"
     }
