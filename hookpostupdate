@@ -6,7 +6,7 @@ readonly NUBE_REFS="$1"
 readonly NUBE_DOMAIN="$2"
 readonly NUBE_GIT_DIR="$3"
 
-readonly NUBE_PATH="/var/www/$NUBE_DOMAIN"
+readonly NUBE_PATH="/www/$NUBE_DOMAIN"
 readonly NUBE_SLUG=$(echo $NUBE_DOMAIN | sed 's/[-\.]/_/g')
 readonly NUBE_URL="https://$NUBE_DOMAIN"
 readonly NUBE_CURRENT_PATH="$HOME/www/$NUBE_DOMAIN"
