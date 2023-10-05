@@ -1,0 +1,13 @@
+[Unit]
+Description=dev.ar in Bialet
+PartOf=bialet.service
+After=bialet.service
+
+[Service]
+User=root
+WorkingDirectory=/www/dev.ar
+ExecStart=bialet -p 7002 /www/dev.ar
+Restart=on-failure
+
+[Install]
+WantedBy=bialet.service
