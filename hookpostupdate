@@ -102,7 +102,7 @@ npm_install() {
 }
 
 copy_db() {
-  cp "$NUBE_CURRENT_PATH/_db.sqlite3" "$NUBE_PREV_PATH/_db.sqlite3"
+  cp "$NUBE_CURRENT_PATH/_db.sqlite3" "$NUBE_DEPLOY_PATH/_db.sqlite3"
 }
 
 nube_start
