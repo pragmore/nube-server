@@ -21,5 +21,7 @@ cp bin/* /usr/local/bin
 
 # Restart services
 systemctl daemon-reload
-systemctl reload nginx
+systemctl enable nginx
+systemctl enable bialet-dev.ar
+systemctl restart nginx
 systemctl restart bialet-dev.ar

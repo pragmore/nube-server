@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Update Ubuntu
+apt update
+apt upgrade -y
+apt autoremove -y
+
+# Copy configuration files
+cp -R etc/* /etc
+cp bin/* /usr/local/bin
+
+# Restart services
+systemctl daemon-reload
+systemctl reload nginx
+systemctl restart bialet-dev.ar

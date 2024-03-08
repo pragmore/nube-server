@@ -1,42 +1,42 @@
-# nube.pragmore.com server scripts
+# ☁️ Nube, by Pragmore
 
-## nr - New repository
+Set up y configuraciones de un servidor Ubuntu.
 
-    nr <name> <domain>
-    nr <domain>
+* Servidor Nginx
+* Servidor [Bialet](https://github.com/bialet/bialet)
+* Servidor Git
+* Certificados con Certbot (no esta incluido el set up y configuración)
 
-Example
+## Comandos para administrar
 
-    nr default johndoe.nube.pragmore.com
-    nr example.com
+Se administra con systemctl
 
-## nd - New domain
+Recargar la configuración de Nginx sin reiniciar.
 
-    nd <domain>
+```bash
+sudo systemctl reload nginx
+```
 
-Example
+Parar todos los procesos de Bialet.
 
-    nd example.com
+```bash
+sudo systemctl stop bialet
+```
 
-## ns - New subdomain
+Iniciar o reiniciar todos los procesos de Bialet (hay que hacerlo por separado).
 
-    ns <subdomain>
+```bash
+sudo systemctl restart bialet-dev.ar
+sudo systemctl restart bialet-bialet.org
+sudo systemctl restart bialet-pragmore-web
+```
 
-Example
+## MOTD
 
-    ns johndoe
+Se muestran los mensajes de bienvenida al ingresar por SSH. Ver archivo `etc/update-motd.d/00-banner`.
 
-## Create user
+## Git
 
-    add-user.sh <user> <email> [<pem>]
+Se inicia un proyecto de git bare y se configura un usuario para que acceda por SSH al servidor.
 
-Example
-
-    add-user.sh johndoe johndoe@example.com
-    add-user.sh johndoe johndoe@example.com "ssh-rsa AAA...(public key pem)"
-
-Creating a user and a default app
-
-    add-user.sh johndoe johndoe@example.com "ssh-rsa AAA...(public key pem)"
-    sudo runuser -u johndoe -- ns johndoe
-    sudo runuser -u johndoe -- nr default johndoe.nube.pragmore.com | sudo mysql
+Ver archivos para ejecutar estas configuraciones en la carpeta `bin/`.
