@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# Update Ubuntu
+apt update
+apt upgrade -y
+apt autoremove -y
+
+# Install required packages
+apt install -y \
+  openssh-server \
+  nginx \
+  sqlite3 \
+  vim \
+  curl \
+  git \
+  libsqlite3-dev libssl-dev libcurl4-openssl-dev
+
+# Copy configuration files
+cp -R etc/* /etc
