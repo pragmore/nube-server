@@ -6,7 +6,7 @@ After=bialet.service
 [Service]
 User=root
 WorkingDirectory=/www/dev.ar
-ExecStart=bialet -p 7002 /www/dev.ar
+ExecStart=bialet -p 7002 -m 1024 -M 2048 -l /var/log/dev.ar /www/dev.ar
 Restart=on-failure
 
 [Install]
