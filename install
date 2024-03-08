@@ -15,6 +15,9 @@ apt install -y \
   git \
   libsqlite3-dev libssl-dev libcurl4-openssl-dev
 
+# Add log directory for Bialet
+mkdir -p /var/log/bialet/
+
 # Copy configuration files
 cp -R etc/* /etc
 cp bin/* /usr/local/bin

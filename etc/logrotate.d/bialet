@@ -1,0 +1,11 @@
+/var/log/nginx/bialet/*.log {
+  daily
+  minsize 1M
+  missingok
+  rotate 20
+  compress
+  delaycompress
+  notifempty
+  copytruncate
+}
+
