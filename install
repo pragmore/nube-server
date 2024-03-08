@@ -16,5 +16,9 @@ apt install -y \
   libsqlite3-dev libssl-dev libcurl4-openssl-dev
 
 # Copy configuration files
-cp -R etc /etc
+cp -R etc/* /etc
 cp bin/* /usr/local/bin
+
+# Restart services
+systemctl reload nginx
+systemctl restart bialet-dev.ar
