@@ -1,0 +1,19 @@
+server {
+	listen 80;
+	listen [::]:80;
+
+	listen 443 ssl;
+	listen [::]:443 ssl;
+
+	ssl_certificate /etc/letsencrypt/live/0p.ar/cert.pem;
+	ssl_certificate_key /etc/letsencrypt/live/0p.ar/privkey.pem;
+
+	server_name home.dev.ar;
+
+	location / {
+		proxy_set_header Host $host;
+		proxy_set_header X-Real-IP $remote_addr;
+		proxy_pass http://127.0.0.1:7002;
+	}
+
+}
