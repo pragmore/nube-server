@@ -1,4 +1,4 @@
-/var/log/nginx/bialet/*.log {
+/var/log/bialet/*.log {
   daily
   minsize 1M
   missingok
