@@ -101,12 +101,7 @@ npm_install() {
         && echo -e $NUBE_OK_MESSAGE  || nube_error)
 }
 
-copy_db() {
-  cp "$NUBE_CURRENT_PATH/_db.sqlite3" "$NUBE_DEPLOY_PATH/_db.sqlite3"
-}
-
 nube_start
 cd_web_path
 deploy_files
-copy_db
 finish
