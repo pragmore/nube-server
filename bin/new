@@ -1,0 +1,71 @@
+#!/bin/bash
+#
+# Set up repository and web directory for a new Bialet project.
+#
+
+DOMAIN=$1
+SYSTEM_PATH="/etc/systemd/system/"
+BIALET_PREFIX="bialet-"
+
+WEB_PATH="$HOME/www/$DOMAIN"
+PUBLIC_PATH="$WEB_PATH/"
+REPOSITORY_PATH="$HOME/$DOMAIN.git"
+POST_UPDATE_FILE="$REPOSITORY_PATH/hooks/post-update"
+NGINX_FILE="/etc/nginx/sites-enabled/$DOMAIN.conf"
+SYSTEM_FILE="$SYSTEM_PATH/$BIALET_PREFIX$DOMAIN.service"
+TOTAL_BIALET=$(find $SYSTEM_PATH -maxdepth 1 -type f -name "$BIALET_PREFIX*" | wc -l)
+NUMBER_BIALET=$(( $TOTAL_BIALET + 7100 ))
+LOG_FILE="/var/log/bialet/$DOMAIN.log"
+DB_FILE="/www/$DOMAIN.sql"
+
+echo "creating folder"
+mkdir -p $PUBLIC_PATH
+chgrp -R www-data $PUBLIC_PATH
+ln -s $WEB_PATH "/www/$DOMAIN"
+echo "creating home page"
+echo "<html><body><?= \"$DOMAIN \" ?></body></html>" > "$PUBLIC_PATH/index.html"
+
+if [ ! -d "$REPOSITORY_PATH" ]; then
+    echo "create repository folder" 1>&2
+    mkdir -p $REPOSITORY_PATH
+    cd $REPOSITORY_PATH
+    git init --bare 1>&2
+    echo "create post update hook" 1>&2
+else
+    echo "update post update hook" 1>&2
+fi
+
+echo '#!/bin/bash' > $POST_UPDATE_FILE
+echo "# Generated on $(date)" >> $POST_UPDATE_FILE
+echo "/usr/local/bin/hookpostupdate \$1 \"$DOMAIN\" \"$REPOSITORY_PATH\"" >> $POST_UPDATE_FILE
+chmod a+x $POST_UPDATE_FILE
+
+echo "create nginx config"
+echo "# Generated on $(date)" > $NGINX_FILE
+echo "server {" > $NGINX_FILE
+echo "    listen 80;" >> $NGINX_FILE
+echo "    server_name $DOMAIN;" >> $NGINX_FILE
+echo "    root $PUBLIC_PATH;" >> $NGINX_FILE
+echo "    location / {" >> $NGINX_FILE
+echo "        proxy_set_header Host $host;" >> $NGINX_FILE
+echo "        proxy_set_header X-Real-IP $remote_addr;" >> $NGINX_FILE
+echo "        proxy_pass http://127.0.0.1:$NUMBER_BIALET;" >> $NGINX_FILE
+echo "    }" >> $NGINX_FILE
+echo "}" >> $NGINX_FILE
+
+echo "create systemd service"
+echo "# Generated on $(date)" > $SYSTEM_FILE
+echo "[Unit]" > $SYSTEM_FILE
+echo "Description=Bialet service for $DOMAIN" >> $SYSTEM_FILE
+echo "After=bialet.service" >> $SYSTEM_FILE
+echo "PartOf=bialet.service" >> $SYSTEM_FILE
+echo "" >> $SYSTEM_FILE
+echo "[Service]" >> $SYSTEM_FILE
+echo "User=root" >> $SYSTEM_FILE
+echo "WorkingDirectory=/www/$DOMAIN" >> $SYSTEM_FILE
+echo "ExecStart=bialet -p $NUMBER_BIALET -m 1024 -M 2048 -l $LOG_FILE -d $DB_FILE /www/$DOMAIN" >> $SYSTEM_FILE
+echo "Restart=on-failure" >> $SYSTEM_FILE
+echo "" >> $SYSTEM_FILE
+echo "[Install]" >> $SYSTEM_FILE
+echo "WantedBy=bialet.service" >> $SYSTEM_FILE
+
