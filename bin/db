@@ -1,0 +1,12 @@
+#!/bin/bash
+#
+# Run query on database and return result
+#
+
+DOMAIN=$1
+QUERY=$2
+DB_FILE="/www/$DOMAIN.sql"
+
+if [ -f "$DB_FILE" ]; then
+  sqlite3 "$DB_FILE" "$QUERY"
+fi

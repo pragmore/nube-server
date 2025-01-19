@@ -25,7 +25,7 @@ sudo chgrp -R www-data $PUBLIC_PATH
 ln -s $WEB_PATH "/www/$DOMAIN"
 echo "creating home page"
 echo "import \"bialet\" for Response" > "$PUBLIC_PATH/index.wren"
-echo "Response.out(<html><body>$DOMAIN working</body></html>)" >> "$PUBLIC_PATH/index.wren"
+echo "Response.out(<html><body>$DOMAIN is working</body></html>)" >> "$PUBLIC_PATH/index.wren"
 
 if [ ! -d "$REPOSITORY_PATH" ]; then
     echo "create repository folder" 1>&2
