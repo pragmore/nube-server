@@ -48,8 +48,8 @@ echo "    listen 80;" >> $NGINX_FILE
 echo "    listen [::]:80;" >> $NGINX_FILE
 echo "    listen 443 ssl;" >> $NGINX_FILE
 echo "    listen [::]:443 ssl;" >> $NGINX_FILE
-echo "    ssl_certificate /etc/letsencrypt/live/0p.ar/cert.pem;" >> $NGINX_FILE
-echo "    ssl_certificate_key /etc/letsencrypt/live/0p.ar/privkey.pem;" >> $NGINX_FILE
+echo "    ssl_certificate /etc/letsencrypt/live/dev.ar/cert.pem;" >> $NGINX_FILE
+echo "    ssl_certificate_key /etc/letsencrypt/live/dev.ar/privkey.pem;" >> $NGINX_FILE
 echo "    server_name $DOMAIN;" >> $NGINX_FILE
 echo "    root $PUBLIC_PATH;" >> $NGINX_FILE
 echo "    location / {" >> $NGINX_FILE
