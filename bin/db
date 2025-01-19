@@ -5,7 +5,7 @@
 
 DOMAIN=$1
 QUERY=$2
-DB_FILE="/www/$DOMAIN.sql"
+DB_FILE="/www/$DOMAIN.sqlite"
 
 if [ -f "$DB_FILE" ]; then
   sqlite3 "$DB_FILE" "$QUERY"

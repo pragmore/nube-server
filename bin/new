@@ -17,7 +17,7 @@ SYSTEM_FILE="$SYSTEM_PATH/$SERVICE_NAME"
 TOTAL_BIALET=$(find $SYSTEM_PATH -maxdepth 1 -type f -name "$BIALET_PREFIX*" | wc -l)
 NUMBER_BIALET=$(( $TOTAL_BIALET + 7100 ))
 LOG_FILE="/var/log/bialet/$DOMAIN.log"
-DB_FILE="/www/$DOMAIN.sql"
+DB_FILE="/www/$DOMAIN.sqlite"
 
 echo "creating folder"
 mkdir -p $PUBLIC_PATH
