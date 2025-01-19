@@ -23,7 +23,8 @@ mkdir -p $PUBLIC_PATH
 chgrp -R www-data $PUBLIC_PATH
 ln -s $WEB_PATH "/www/$DOMAIN"
 echo "creating home page"
-echo "<html><body>\"$DOMAIN working!" > "$PUBLIC_PATH/index.html"
+echo "import \"bialet\" for Response" > "$PUBLIC_PATH/index.wren"
+echo "Response.out(<html><body>$DOMAIN working</body></html>)" >> "$PUBLIC_PATH/index.wren"
 
 if [ ! -d "$REPOSITORY_PATH" ]; then
     echo "create repository folder" 1>&2
