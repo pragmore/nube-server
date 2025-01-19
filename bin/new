@@ -12,7 +12,8 @@ PUBLIC_PATH="$WEB_PATH/"
 REPOSITORY_PATH="$HOME/$DOMAIN.git"
 POST_UPDATE_FILE="$REPOSITORY_PATH/hooks/post-update"
 NGINX_FILE="/etc/nginx/sites-enabled/$DOMAIN.conf"
-SYSTEM_FILE="$SYSTEM_PATH/$BIALET_PREFIX$DOMAIN.service"
+SERVICE_NAME="$BIALET_PREFIX$DOMAIN.service"
+SYSTEM_FILE="$SYSTEM_PATH/$SERVICE_NAME"
 TOTAL_BIALET=$(find $SYSTEM_PATH -maxdepth 1 -type f -name "$BIALET_PREFIX*" | wc -l)
 NUMBER_BIALET=$(( $TOTAL_BIALET + 7100 ))
 LOG_FILE="/var/log/bialet/$DOMAIN.log"
@@ -20,7 +21,7 @@ DB_FILE="/www/$DOMAIN.sql"
 
 echo "creating folder"
 mkdir -p $PUBLIC_PATH
-chgrp -R www-data $PUBLIC_PATH
+sudo chgrp -R www-data $PUBLIC_PATH
 ln -s $WEB_PATH "/www/$DOMAIN"
 echo "creating home page"
 echo "import \"bialet\" for Response" > "$PUBLIC_PATH/index.wren"
@@ -76,7 +77,7 @@ echo "Restart=on-failure" >> $SYSTEM_FILE
 echo "" >> $SYSTEM_FILE
 echo "[Install]" >> $SYSTEM_FILE
 echo "WantedBy=bialet.service" >> $SYSTEM_FILE
-sleep 1
-sudo systemctl restart $SYSTEM_FILE
+sudo systemctl start $SERVICE_NAME
+sudo systemctl enable $SERVICE_NAME
 
 echo "done"
