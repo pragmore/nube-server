@@ -1,0 +1,13 @@
+[Unit]
+Description=stats.albo.ar in Bialet
+PartOf=bialet.service
+After=bialet.service
+
+[Service]
+User=root
+WorkingDirectory=/www/stats.albo.ar
+ExecStart=bialet -p 7020 -m 1024 -M 2048 -l /var/log/bialet/stats.albo.ar.log -d /www/stats.albo.ar.sqlite /www/stats.albo.ar
+Restart=on-failure
+
+[Install]
+WantedBy=bialet.service
