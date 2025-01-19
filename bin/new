@@ -76,6 +76,7 @@ echo "Restart=on-failure" >> $SYSTEM_FILE
 echo "" >> $SYSTEM_FILE
 echo "[Install]" >> $SYSTEM_FILE
 echo "WantedBy=bialet.service" >> $SYSTEM_FILE
+sleep 1
 sudo systemctl restart $SYSTEM_FILE
 
 echo "done"
