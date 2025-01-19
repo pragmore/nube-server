@@ -41,6 +41,7 @@ echo "# Generated on $(date)" >> $POST_UPDATE_FILE
 echo "/usr/local/bin/hookpostupdate \$1 \"$DOMAIN\" \"$REPOSITORY_PATH\"" >> $POST_UPDATE_FILE
 chmod a+x $POST_UPDATE_FILE
 
+sudo certbot certonly --nginx -n -d "$DOMAIN"
 echo "create nginx config"
 echo "# Generated on $(date)" > $NGINX_FILE
 echo "server {" > $NGINX_FILE
@@ -48,8 +49,8 @@ echo "    listen 80;" >> $NGINX_FILE
 echo "    listen [::]:80;" >> $NGINX_FILE
 echo "    listen 443 ssl;" >> $NGINX_FILE
 echo "    listen [::]:443 ssl;" >> $NGINX_FILE
-echo "    ssl_certificate /etc/letsencrypt/live/dev.ar/cert.pem;" >> $NGINX_FILE
-echo "    ssl_certificate_key /etc/letsencrypt/live/dev.ar/privkey.pem;" >> $NGINX_FILE
+echo "    ssl_certificate /etc/letsencrypt/live/$DOMAIN/cert.pem;" >> $NGINX_FILE
+echo "    ssl_certificate_key /etc/letsencrypt/live/$DOMAIN/privkey.pem;" >> $NGINX_FILE
 echo "    server_name $DOMAIN;" >> $NGINX_FILE
 echo "    root $PUBLIC_PATH;" >> $NGINX_FILE
 echo "    location / {" >> $NGINX_FILE
@@ -58,6 +59,7 @@ echo "        proxy_set_header X-Real-IP \$remote_addr;" >> $NGINX_FILE
 echo "        proxy_pass http://127.0.0.1:$NUMBER_BIALET;" >> $NGINX_FILE
 echo "    }" >> $NGINX_FILE
 echo "}" >> $NGINX_FILE
+sudo systemctl reload nginx
 
 echo "create systemd service"
 echo "# Generated on $(date)" > $SYSTEM_FILE
@@ -74,6 +76,6 @@ echo "Restart=on-failure" >> $SYSTEM_FILE
 echo "" >> $SYSTEM_FILE
 echo "[Install]" >> $SYSTEM_FILE
 echo "WantedBy=bialet.service" >> $SYSTEM_FILE
+sudo systemctl restart $SYSTEM_FILE
 
-echo "done!\n"
-echo "git add remote prod $USER@git.ar:$REPOSITORY_PATH"
+echo "done"
