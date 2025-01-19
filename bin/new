@@ -23,7 +23,7 @@ mkdir -p $PUBLIC_PATH
 chgrp -R www-data $PUBLIC_PATH
 ln -s $WEB_PATH "/www/$DOMAIN"
 echo "creating home page"
-echo "<html><body><?= \"$DOMAIN \" ?></body></html>" > "$PUBLIC_PATH/index.html"
+echo "<html><body>\"$DOMAIN working!" > "$PUBLIC_PATH/index.html"
 
 if [ ! -d "$REPOSITORY_PATH" ]; then
     echo "create repository folder" 1>&2
@@ -48,7 +48,7 @@ echo "    listen [::]:80;" >> $NGINX_FILE
 echo "    listen 443 ssl;" >> $NGINX_FILE
 echo "    listen [::]:443 ssl;" >> $NGINX_FILE
 echo "    ssl_certificate /etc/letsencrypt/live/0p.ar/cert.pem;" >> $NGINX_FILE
-echo "    ssl_certificate_key /etc/letsencrypt/live/0p.ar/privkey.key;" >> $NGINX_FILE
+echo "    ssl_certificate_key /etc/letsencrypt/live/0p.ar/privkey.pem;" >> $NGINX_FILE
 echo "    server_name $DOMAIN;" >> $NGINX_FILE
 echo "    root $PUBLIC_PATH;" >> $NGINX_FILE
 echo "    location / {" >> $NGINX_FILE
@@ -74,3 +74,5 @@ echo "" >> $SYSTEM_FILE
 echo "[Install]" >> $SYSTEM_FILE
 echo "WantedBy=bialet.service" >> $SYSTEM_FILE
 
+echo "done!\n"
+echo "git add remote prod $USER@git.ar:$REPOSITORY_PATH"
