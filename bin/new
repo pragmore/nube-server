@@ -21,7 +21,6 @@ DB_FILE="/www/$DOMAIN.sqlite"
 
 echo "creating folder"
 mkdir -p $PUBLIC_PATH
-sudo chgrp -R www-data $PUBLIC_PATH
 ln -s $WEB_PATH "/www/$DOMAIN"
 echo "creating home page"
 echo "import \"bialet\" for Response" > "$PUBLIC_PATH/index.wren"
@@ -42,7 +41,6 @@ echo "# Generated on $(date)" >> $POST_UPDATE_FILE
 echo "/usr/local/bin/hookpostupdate \$1 \"$DOMAIN\" \"$REPOSITORY_PATH\"" >> $POST_UPDATE_FILE
 chmod a+x $POST_UPDATE_FILE
 
-sudo certbot certonly --nginx -n -d "$DOMAIN"
 echo "create nginx config"
 echo "# Generated on $(date)" > $NGINX_FILE
 echo "server {" > $NGINX_FILE
@@ -77,6 +75,9 @@ echo "Restart=on-failure" >> $SYSTEM_FILE
 echo "" >> $SYSTEM_FILE
 echo "[Install]" >> $SYSTEM_FILE
 echo "WantedBy=bialet.service" >> $SYSTEM_FILE
+
+sudo certbot certonly --nginx -n -d "$DOMAIN"
+# sudo chgrp -R www-data $PUBLIC_PATH
 sudo systemctl start $SERVICE_NAME
 sudo systemctl enable $SERVICE_NAME
 
